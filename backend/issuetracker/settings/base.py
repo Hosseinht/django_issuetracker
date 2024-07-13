@@ -34,6 +34,18 @@ ALLOWED_HOSTS = []
 
 
 # Application definition
+LOCAL_APPS = [
+    "users.apps.UsersConfig",
+    "issues.apps.IssuesConfig",
+]
+
+THIRD_PARTY_APPS = [
+    # "django_filters",
+    # "corsheaders",
+    # "drf_spectacular",
+    "debug_toolbar",
+    # "djoser",
+]
 
 INSTALLED_APPS = [
     "django.contrib.admin",
@@ -42,9 +54,12 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    *THIRD_PARTY_APPS,
+    *LOCAL_APPS,
 ]
 
 MIDDLEWARE = [
+    "debug_toolbar.middleware.DebugToolbarMiddleware",
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
@@ -55,6 +70,11 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = "issuetracker.urls"
+
+INTERNAL_IPS = [
+    "127.0.0.1",
+]
+
 
 TEMPLATES = [
     {
@@ -121,3 +141,5 @@ STATIC_URL = "static/"
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+# AUTH_USER_MODEL = "users.User"

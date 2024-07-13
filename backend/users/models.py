@@ -8,9 +8,5 @@ from django.db import models
 # Create your models here.
 
 
-class UserManager(BaseUserManager):
-    pass
-
-
-class User(AbstractBaseUser, PermissionsMixin):
+class User(AbstractBaseUser):
     pass
