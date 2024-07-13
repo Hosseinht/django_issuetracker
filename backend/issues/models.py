@@ -6,16 +6,19 @@ from django.utils import timezone
 
 class Issue(models.Model):
     class Status(models.TextChoices):
-        OPEN = "O", "Open"
-        IN_PROGRESS = "I", "In Progress"
-        CLOSE = "C", "CLOSE"
+        OPEN = "Open"
+        IN_PROGRESS = "In Progress"
+        CLOSE = "CLOSE"
 
     title = models.CharField(max_length=255)
     description = models.TextField()
     status = models.CharField(
-        max_length=1,
+        max_length=12,
         choices=Status.choices,
         default=Status.OPEN,
     )
     created_at = models.DateTimeField(default=timezone.now)
     updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return self.title
