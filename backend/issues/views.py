@@ -32,7 +32,7 @@ class CreateIssueView(APIView):
             )
 
         except Exception as ex:
-            return Response({"detail": f"{ex}"}, status=status.HTTP_400_BAD_REQUEST)
+            return Response({"detail": "error"}, status=status.HTTP_400_BAD_REQUEST)
 
         # Return the created issue data with a 201 status
         return Response(
