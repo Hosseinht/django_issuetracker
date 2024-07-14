@@ -19,7 +19,7 @@ from issues.services import create_issue
 #     return Response(serializer.data, status=status.HTTP_201_CREATED)
 
 
-class CreateIssueView(APIView):
+class IssueCreateView(APIView):
     def post(self, request):
         serializer = IssueInputSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
@@ -39,3 +39,10 @@ class CreateIssueView(APIView):
             IssueOutPutSerializer(issue, context={"request": request}).data,
             status=status.HTTP_201_CREATED,
         )
+
+
+class IssueListView(APIView):
+    def get(self, request):
+        issues = Issue.objects.all()
+
+        return Response(IssueOutPutSerializer(issues, many=True).data)
