@@ -13,6 +13,7 @@
 /.next/
 /out/
 
+TypeErrors.md
 # production
 /build
 

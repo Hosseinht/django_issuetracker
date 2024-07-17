@@ -6,9 +6,9 @@ from django.utils import timezone
 
 class Issue(models.Model):
     class Status(models.TextChoices):
-        OPEN = "Open"
-        IN_PROGRESS = "In Progress"
-        CLOSE = "CLOSE"
+        OPEN = "OPEN"
+        IN_PROGRESS = "IN_PROGRESS"
+        CLOSED = "CLOSED"
 
     title = models.CharField(max_length=255)
     description = models.TextField()
