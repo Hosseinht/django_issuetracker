@@ -1,10 +1,12 @@
+from django.shortcuts import get_object_or_404
 from rest_framework import status
 from rest_framework.generics import CreateAPIView
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from issues.models import Issue
-from issues.serializers import IssueInputSerializer, IssueOutPutSerializer
+from issues.serializers import (IssueDetailSerializer, IssueInputSerializer,
+                                IssueOutPutSerializer)
 from issues.services import create_issue
 
 # class CreateIssueView(CreateAPIView):
@@ -44,5 +46,12 @@ class IssueCreateView(APIView):
 class IssueListView(APIView):
     def get(self, request):
         issues = Issue.objects.all()
+        serializer = IssueOutPutSerializer(issues, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
 
-        return Response(IssueOutPutSerializer(issues, many=True).data)
+
+class IssueDetailView(APIView):
+    def get(self, request, pk):
+        issue = get_object_or_404(Issue, id=pk)
+        serializer = IssueDetailSerializer(issue)
+        return Response(serializer.data, status=status.HTTP_200_OK)

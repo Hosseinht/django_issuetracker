@@ -11,10 +11,19 @@ class IssueInputSerializer(serializers.Serializer):
 class IssueOutPutSerializer(serializers.ModelSerializer):
     created_at = serializers.DateTimeField(format="%a %b %d %Y")
 
-    # def to_representation(self, instance):
-    #     representation = super(IssueOutPutSerializer, self).to_representation(instance)
-    #     representation["created_at"] = instance.created_at.strftime("%a %b %d %Y")
-    #     return representation
+    class Meta:
+        model = Issue
+        fields = (
+            "id",
+            "title",
+            "status",
+            "created_at",
+        )
+
+
+class IssueDetailSerializer(serializers.ModelSerializer):
+    created_at = serializers.DateTimeField(format="%a %b %d %Y")
+    updated_at = serializers.DateTimeField(format="%a %b %d %Y")
 
     class Meta:
         model = Issue
