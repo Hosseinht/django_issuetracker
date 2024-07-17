@@ -4,18 +4,13 @@ import { Button, Table } from "@radix-ui/themes";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import useIssues from "@/app/hooks/useIssues";
 
 const IssuesPage = () => {
-  const [issues, setIssues] = useState<any>([]);
+  const { data: issues, error, isLoading } = useIssues();
 
-  useEffect(() => {
-    const fetchUsers = async () => {
-      const { data } = await axios.get<any>("http://127.0.0.1:8000/api/issue/");
-      setIssues(data);
-    };
-    fetchUsers();
-  }, []);
-
+  if (isLoading) return <div>Loading...</div>;
+  if (error) return <div>An error occurred: {error.message}</div>;
   return (
     <div>
       <div className="mb-5">
@@ -36,7 +31,7 @@ const IssuesPage = () => {
           </Table.Row>
         </Table.Header>
         <Table.Body>
-          {issues.map((issue) => (
+          {issues?.map((issue) => (
             <Table.Row key={issue.id}>
               <Table.Cell>
                 {issue.title}
