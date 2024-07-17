@@ -1,23 +1,12 @@
-"use client";
-
-import { Button, Table } from "@radix-ui/themes";
-import Link from "next/link";
-import useIssues from "@/app/hooks/useIssues";
+import React from "react";
+import { Table } from "@radix-ui/themes";
 import IssueStatusBadge from "@/app/components/IssueStatusBadge";
-import LoadingIssuesPage from "@/app/issues/loading";
+import Skeleton from "react-loading-skeleton";
+import "react-loading-skeleton/dist/skeleton.css";
 import IssueActions from "@/app/issues/IssueActions";
 
-const IssuesPage = () => {
-  const { data: issues, error, isLoading } = useIssues();
-
-  if (isLoading)
-    return (
-      <div>
-        <LoadingIssuesPage />
-      </div>
-    );
-  if (error) return <div>An error occurred: {error.message}</div>;
-
+const LoadingIssuesPage = () => {
+  const issues = [1, 2, 3, 4, 5];
   return (
     <div>
       <IssueActions />
@@ -35,19 +24,18 @@ const IssuesPage = () => {
         </Table.Header>
         <Table.Body>
           {issues?.map((issue) => (
-            <Table.Row key={issue.id}>
+            <Table.Row key={issue}>
               <Table.Cell>
-                {issue.title}
+                <Skeleton />
                 <div className="block md:hidden">
-                  <IssueStatusBadge status={issue.status} />
-                  {/*{issue.status}*/}
+                  <Skeleton />
                 </div>
               </Table.Cell>
               <Table.Cell className="hidden md:table-cell">
-                <IssueStatusBadge status={issue.status} />
+                <Skeleton />
               </Table.Cell>
               <Table.Cell className="hidden md:table-cell">
-                {issue.created_at}
+                <Skeleton />
               </Table.Cell>
             </Table.Row>
           ))}
@@ -57,4 +45,4 @@ const IssuesPage = () => {
   );
 };
 
-export default IssuesPage;
+export default LoadingIssuesPage;

@@ -16,7 +16,6 @@ interface IssueStatusProps {
   status: Status;
 }
 const IssueStatusBadge = ({ status }: IssueStatusProps) => {
-  console.log({ statusMap });
   return (
     <Badge color={statusMap[status].color}>{statusMap[status].label}</Badge>
   );
