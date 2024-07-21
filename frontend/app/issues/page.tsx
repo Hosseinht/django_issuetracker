@@ -1,7 +1,7 @@
 "use client";
 
-import { Button, Table } from "@radix-ui/themes";
-import Link from "next/link";
+import { Table } from "@radix-ui/themes";
+import Link from "../components/Link";
 import useIssues from "@/app/hooks/useIssues";
 import IssueStatusBadge from "@/app/components/IssueStatusBadge";
 import LoadingIssuesPage from "@/app/issues/loading";
