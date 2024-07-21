@@ -2,6 +2,8 @@
 
 import useIssue from "@/app/hooks/useIssue";
 import { notFound } from "next/navigation";
+import { Card, Flex, Heading, Text } from "@radix-ui/themes";
+import IssueStatusBadge from "@/app/components/IssueStatusBadge";
 
 interface Props {
   params: { id: string };
@@ -11,6 +13,7 @@ const IssueDetailPage = ({ params }: Props) => {
   const id = parseInt(params.id);
 
   const { data: issue, error, isLoading } = useIssue(id);
+
   if (isLoading) return <div>Loading...</div>;
 
   if (!issue) {
@@ -19,10 +22,12 @@ const IssueDetailPage = ({ params }: Props) => {
 
   return (
     <div>
-      <div>{issue?.title}</div>
-      <div>{issue?.description}</div>
-      <div>{issue?.status}</div>
-      <div>{issue?.created_at}</div>
+      <Heading>{issue?.title}</Heading>
+      <Flex gap="3" align="center" my="2">
+        <IssueStatusBadge status={issue.status} />
+        <Text>{issue?.created_at}</Text>
+      </Flex>
+      <Card>{issue?.description}</Card>
     </div>
   );
 };
