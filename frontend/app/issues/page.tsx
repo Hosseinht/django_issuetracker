@@ -1,12 +1,11 @@
 "use client";
 
 import { Table } from "@radix-ui/themes";
-import Link from "../components/Link";
 import useIssues from "@/app/hooks/useIssues";
-import IssueStatusBadge from "@/app/components/IssueStatusBadge";
 import LoadingIssuesPage from "@/app/issues/loading";
 import IssueActions from "@/app/issues/IssueActions";
 import { notFound } from "next/navigation";
+import { IssueStatusBadge, Link } from "@/app/components";
 
 const IssuesPage = () => {
   const { data: issues, isLoading } = useIssues();

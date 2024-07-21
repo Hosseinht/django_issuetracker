@@ -54,7 +54,7 @@ const NewIssuePage = () => {
 
         <ErrorMessage>{errors.title?.message}</ErrorMessage>
 
-        <Controller<any>
+        <Controller
           defaultValue=""
           name="description"
           control={control}
