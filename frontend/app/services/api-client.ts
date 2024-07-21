@@ -16,10 +16,16 @@ class APIClient<T> {
   }
 
   // Method to fetch all resources from the specified endpoint.
-  getAll = () => {
+  getAll = async () => {
     // Make a GET request to the endpoint, optionally with additional config.
-    return axiosInstance.get<T>(this.endpoint).then((res) => res.data);
+    const res = await axiosInstance.get<T>(this.endpoint);
+    return res.data;
     // Return the data from the response.
+  };
+
+  getOne = async (id: number) => {
+    const res = await axiosInstance.get<T>(this.endpoint + "/" + id);
+    return res.data;
   };
 }
 

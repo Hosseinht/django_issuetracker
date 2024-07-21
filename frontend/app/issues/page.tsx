@@ -6,9 +6,10 @@ import useIssues from "@/app/hooks/useIssues";
 import IssueStatusBadge from "@/app/components/IssueStatusBadge";
 import LoadingIssuesPage from "@/app/issues/loading";
 import IssueActions from "@/app/issues/IssueActions";
+import { notFound } from "next/navigation";
 
 const IssuesPage = () => {
-  const { data: issues, error, isLoading } = useIssues();
+  const { data: issues, isLoading } = useIssues();
 
   if (isLoading)
     return (
@@ -16,7 +17,9 @@ const IssuesPage = () => {
         <LoadingIssuesPage />
       </div>
     );
-  if (error) return <div>An error occurred: {error.message}</div>;
+  if (!issues) {
+    notFound();
+  }
 
   return (
     <div>
@@ -37,10 +40,9 @@ const IssuesPage = () => {
           {issues?.map((issue) => (
             <Table.Row key={issue.id}>
               <Table.Cell>
-                {issue.title}
+                <Link href={`/issues/${issue.id}`}>{issue.title}</Link>
                 <div className="block md:hidden">
                   <IssueStatusBadge status={issue.status} />
-                  {/*{issue.status}*/}
                 </div>
               </Table.Cell>
               <Table.Cell className="hidden md:table-cell">

@@ -6,6 +6,7 @@ import { Inter } from "next/font/google";
 import NavBar from "@/app/NavBar";
 import { Theme, ThemePanel } from "@radix-ui/themes";
 import QueryClientProvider from "@/app/QueryClientProvider";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 
@@ -26,6 +27,7 @@ export default function RootLayout({
           <Theme accentColor="orange">
             <NavBar />
             <main className="p-5">{children}</main>
+            <ReactQueryDevtools />
             {/*<ThemePanel />*/}
           </Theme>
         </QueryClientProvider>
