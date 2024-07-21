@@ -28,7 +28,7 @@ export default function RootLayout({
             <NavBar />
             <main className="p-5">{children}</main>
             <ReactQueryDevtools />
-            <ThemePanel />
+            {/*<ThemePanel />*/}
           </Theme>
         </QueryClientProvider>
       </body>

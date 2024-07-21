@@ -5,6 +5,7 @@ import { notFound } from "next/navigation";
 import { Card, Flex, Heading, Text } from "@radix-ui/themes";
 import IssueStatusBadge from "@/app/components/IssueStatusBadge";
 import ReactMarkdown from "react-markdown";
+import LoadingIssueDetailPage from "@/app/issues/[id]/loading";
 
 interface Props {
   params: { id: string };
@@ -15,7 +16,7 @@ const IssueDetailPage = ({ params }: Props) => {
 
   const { data: issue, error, isLoading } = useIssue(id);
 
-  if (isLoading) return <div>Loading...</div>;
+  if (isLoading) return <LoadingIssueDetailPage />;
 
   if (!issue) {
     notFound();
