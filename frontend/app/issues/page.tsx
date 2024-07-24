@@ -16,9 +16,6 @@ const IssuesPage = () => {
         <LoadingIssuesPage />
       </div>
     );
-  if (!issues) {
-    notFound();
-  }
 
   return (
     <div>

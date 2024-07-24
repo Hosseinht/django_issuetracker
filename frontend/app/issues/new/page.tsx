@@ -7,18 +7,20 @@ import "easymde/dist/easymde.min.css";
 import { Controller, useForm } from "react-hook-form";
 import axios from "axios";
 import { useRouter } from "next/navigation";
-import { Suspense, useState } from "react";
+import { useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { createIssueSchemas } from "@/app/validationSchemas";
 import { z } from "zod";
 import ErrorMessage from "@/app/components/ErrorMessage";
 import Spinner from "@/app/components/Spinner";
-import LoadingNewIssuePage from "@/app/issues/new/loading";
+import useCreateIssue from "@/app/hooks/useCreateIssue";
 
 type IssueForm = z.infer<typeof createIssueSchemas>;
 
 const NewIssuePage = () => {
   const router = useRouter();
+  const { createIssue, error, isLoading } = useCreateIssue();
+
   const {
     register,
     control,
@@ -28,18 +30,11 @@ const NewIssuePage = () => {
     resolver: zodResolver(createIssueSchemas),
   });
 
-  const [error, setError] = useState("");
+  // const [error, setError] = useState("");
   const [isSubmitting, setSubmitting] = useState(false);
 
-  const onSubmit = handleSubmit(async (data) => {
-    try {
-      setSubmitting(true);
-      await axios.post("http://127.0.0.1:8000/api/issue/create/", data);
-      router.push("/issues");
-    } catch (error) {
-      setSubmitting(false);
-      setError("An unexpected error occurred.");
-    }
+  const onSubmit = handleSubmit((data: IssueForm) => {
+    createIssue(data);
   });
 
   return (
@@ -64,8 +59,8 @@ const NewIssuePage = () => {
         />
         <ErrorMessage>{errors.description?.message}</ErrorMessage>
 
-        <Button disabled={isSubmitting}>
-          Submit New Issue {isSubmitting && <Spinner />}
+        <Button disabled={isLoading}>
+          Submit New Issue {isLoading && <Spinner />}
         </Button>
       </form>
     </div>

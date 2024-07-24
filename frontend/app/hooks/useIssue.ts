@@ -6,12 +6,14 @@ const apiClient = new APIClient<Issue>("/issue");
 
 const useIssue = (id: number) => {
   // console.log(id);
-  return useQuery({
+  const { data, error, isLoading } = useQuery({
     queryKey: ["issue", id],
     queryFn: () => apiClient.getOne(id),
     staleTime: 60 * 1000,
     retry: 3,
   });
+
+  return { data, isLoading };
 };
 
 export default useIssue;
