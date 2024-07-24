@@ -7,18 +7,7 @@ from rest_framework.views import APIView
 from issues.models import Issue
 from issues.serializers import (IssueDetailSerializer, IssueInputSerializer,
                                 IssueOutPutSerializer)
-from issues.services import create_issue
-
-# class CreateIssueView(CreateAPIView):
-#     serializer_class = IssueInputSerializer
-#     queryset = Issue.objects.all()
-
-# def perform_create(self, serializer):
-#     # serializer = IssueInputSerializer(data=request.data)
-#     # serializer.is_valid(raise_exception=True)
-#     # print(serializer)
-#     serializer.save()
-#     return Response(serializer.data, status=status.HTTP_201_CREATED)
+from issues.services import create_issue, update_issue
 
 
 class IssueCreateView(APIView):
@@ -54,4 +43,16 @@ class IssueDetailView(APIView):
     def get(self, request, pk):
         issue = get_object_or_404(Issue, id=pk)
         serializer = IssueDetailSerializer(issue)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+    def patch(self, request, pk):
+        issue = get_object_or_404(Issue, id=pk)
+        serializer = IssueDetailSerializer(
+            data=request.data, instance=issue, partial=True
+        )
+        serializer.is_valid(raise_exception=True)
+        validated_data = serializer.validated_data
+        issue = update_issue(issue, **validated_data)
+
+        serializer = IssueOutPutSerializer(issue)
         return Response(serializer.data, status=status.HTTP_200_OK)

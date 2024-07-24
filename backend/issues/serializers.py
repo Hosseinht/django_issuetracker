@@ -8,6 +8,12 @@ class IssueInputSerializer(serializers.Serializer):
     description = serializers.CharField(required=True)
 
 
+class IssueUpdateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Issue
+        fields = ("title", "description", "status")
+
+
 class IssueOutPutSerializer(serializers.ModelSerializer):
     created_at = serializers.DateTimeField(format="%a %b %d %Y")
 
