@@ -24,13 +24,21 @@ class APIClient<T> {
   };
 
   getOne = async (id: number) => {
-    const res = await axiosInstance.get<T>(this.endpoint + "/" + id);
+    const res = await axiosInstance.get<T>(this.endpoint + "/" + id + "/");
     return res.data;
   };
-  post = async (data: T) => {
-    const res = await axiosInstance
-      .post<T>(this.endpoint, data)
-      .then((res) => res.data);
+
+  update = async (id: number, data: T) => {
+    const res = await axiosInstance.patch<T>(
+      this.endpoint + "/" + id + "/",
+      data,
+    );
+    return res.data;
+  };
+
+  create = async (data: T) => {
+    const res = await axiosInstance.post<T>(this.endpoint, data);
+    return res.data;
   };
 }
 

@@ -48,7 +48,7 @@ class IssueDetailView(APIView):
     def patch(self, request, pk):
         issue = get_object_or_404(Issue, id=pk)
         serializer = IssueDetailSerializer(
-            data=request.data, instance=issue, partial=True
+            instance=issue, data=request.data,  partial=True
         )
         serializer.is_valid(raise_exception=True)
         validated_data = serializer.validated_data
