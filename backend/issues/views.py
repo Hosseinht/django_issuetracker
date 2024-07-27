@@ -56,3 +56,8 @@ class IssueDetailView(APIView):
 
         serializer = IssueOutPutSerializer(issue)
         return Response(serializer.data, status=status.HTTP_200_OK)
+
+    def delete(self,request,pk):
+        issue = get_object_or_404(Issue, id=pk)
+        issue.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
