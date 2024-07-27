@@ -1,6 +1,11 @@
 import { AlertDialog, Button, Flex } from "@radix-ui/themes";
+import useDeleteIssue from "@/app/hooks/useDeleteIssue";
 
 const DeleteIssueButton = ({ issueId }: { issueId: number }) => {
+  const deleteIssue = useDeleteIssue(issueId);
+  const handleSubmit = () => {
+    deleteIssue.mutate();
+  };
   return (
     <>
       <AlertDialog.Root>
@@ -20,7 +25,9 @@ const DeleteIssueButton = ({ issueId }: { issueId: number }) => {
               </Button>
             </AlertDialog.Cancel>
             <AlertDialog.Action>
-              <Button color="red">Delete Issue</Button>
+              <Button color="red" onClick={handleSubmit}>
+                Delete Issue
+              </Button>
             </AlertDialog.Action>
           </Flex>
         </AlertDialog.Content>

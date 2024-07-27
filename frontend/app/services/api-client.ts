@@ -28,6 +28,10 @@ class APIClient<T> {
     return res.data;
   };
 
+  create = async (data: T) => {
+    const res = await axiosInstance.post<T>(this.endpoint, data);
+    return res.data;
+  };
   update = async (id: number, data: T) => {
     const res = await axiosInstance.patch<T>(
       this.endpoint + "/" + id + "/",
@@ -35,9 +39,8 @@ class APIClient<T> {
     );
     return res.data;
   };
-
-  create = async (data: T) => {
-    const res = await axiosInstance.post<T>(this.endpoint, data);
+  delete = async (id: number) => {
+    const res = await axiosInstance.delete(this.endpoint + "/" + id + "/");
     return res.data;
   };
 }
