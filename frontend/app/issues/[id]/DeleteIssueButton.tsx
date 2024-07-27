@@ -1,10 +1,12 @@
 import { AlertDialog, Button, Flex } from "@radix-ui/themes";
 import useDeleteIssue from "@/app/hooks/useDeleteIssue";
+import { useState } from "react";
 
 const DeleteIssueButton = ({ issueId }: { issueId: number }) => {
-  const deleteIssue = useDeleteIssue(issueId);
-  const handleSubmit = () => {
-    deleteIssue.mutate();
+  const { mutate, error, setError } = useDeleteIssue(issueId);
+
+  const deleteIssue = async () => {
+    mutate();
   };
   return (
     <>
@@ -25,11 +27,28 @@ const DeleteIssueButton = ({ issueId }: { issueId: number }) => {
               </Button>
             </AlertDialog.Cancel>
             <AlertDialog.Action>
-              <Button color="red" onClick={handleSubmit}>
+              <Button color="red" onClick={deleteIssue}>
                 Delete Issue
               </Button>
             </AlertDialog.Action>
           </Flex>
+        </AlertDialog.Content>
+      </AlertDialog.Root>
+
+      <AlertDialog.Root open={error}>
+        <AlertDialog.Content>
+          <AlertDialog.Title>Error</AlertDialog.Title>
+          <AlertDialog.Description>
+            This issue could not be deleted.
+          </AlertDialog.Description>
+          <Button
+            color="gray"
+            variant="soft"
+            mt="2"
+            onClick={() => setError(false)}
+          >
+            Ok
+          </Button>
         </AlertDialog.Content>
       </AlertDialog.Root>
     </>
