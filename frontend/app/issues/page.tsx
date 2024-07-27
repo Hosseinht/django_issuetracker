@@ -5,6 +5,7 @@ import useIssues from "@/app/hooks/useIssues";
 import LoadingIssuesPage from "@/app/issues/loading";
 import IssueActions from "@/app/issues/IssueActions";
 import { IssueStatusBadge, Link } from "@/app/components";
+import { useState } from "react";
 
 const IssuesPage = () => {
   const { data: issues, isLoading } = useIssues();

@@ -1,4 +1,3 @@
-import React from "react";
 import { Card, Flex, Heading, Text } from "@radix-ui/themes";
 import IssueStatusBadge from "../../components/IssueStatusBadge";
 import ReactMarkdown from "react-markdown";

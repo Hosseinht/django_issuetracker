@@ -8,21 +8,16 @@ const apiClient = new APIClient("/issue");
 const useDeleteIssue = (id: number) => {
   const client = useQueryClient();
   const router = useRouter();
-  const [error, setError] = useState(false);
-  const { mutate } = useMutation({
+
+  const { mutateAsync, error } = useMutation({
     mutationFn: () => apiClient.delete(id),
     onSuccess: async () => {
       router.push("/issues");
       await client.invalidateQueries({ queryKey: ["issues"] });
     },
-    onError: () => {
-      setError(true);
-    },
   });
   return {
-    mutate,
-    error,
-    setError,
+    mutateAsync,
   };
 };
 
