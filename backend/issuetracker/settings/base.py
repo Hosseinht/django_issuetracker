@@ -45,7 +45,7 @@ THIRD_PARTY_APPS = [
     "corsheaders",
     # "drf_spectacular",
     "debug_toolbar",
-    # "djoser",
+    "djoser",
 ]
 
 INSTALLED_APPS = [
@@ -149,6 +149,7 @@ STATIC_URL = "static/"
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
-# AUTH_USER_MODEL = "users.User"
 
-APPEND_SLASH=False
+AUTH_USER_MODEL = "users.User"
+
+APPEND_SLASH = False
