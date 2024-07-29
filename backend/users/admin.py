@@ -49,6 +49,7 @@ class AdminUser(UserAdmin):
                     "password1",
                     "password2",
                     "email",
+                    "name",
                     "is_active",
                     "is_staff",
                     "is_superuser",
