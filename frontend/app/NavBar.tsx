@@ -5,6 +5,7 @@ import Link from "next/link";
 import { AiFillBug } from "react-icons/ai";
 import { usePathname } from "next/navigation";
 import classnames from "classnames";
+import { Box } from "@radix-ui/themes";
 const NavBar = () => {
   const currentPath = usePathname();
   const links = [
@@ -19,19 +20,24 @@ const NavBar = () => {
       </Link>
       <ul className="flex space-x-6">
         {links.map((link) => (
-          <Link
-            key={link.href}
-            className={classnames({
-              "text-zinc-900": link.href === currentPath,
-              "text-zinc-500": link.href !== currentPath,
-              "hover:text-zinc-800 transitions-colors": true,
-            })}
-            href={link.href}
-          >
-            {link.label}
-          </Link>
+          <li key={link.href}>
+            <Link
+              className={classnames({
+                "text-zinc-900": link.href === currentPath,
+                "text-zinc-500": link.href !== currentPath,
+                "hover:text-zinc-800 transitions-colors": true,
+              })}
+              href={link.href}
+            >
+              {link.label}
+            </Link>
+          </li>
         ))}
       </ul>
+      <Box>
+        <Link href="/login">Login</Link>
+        <Link href="/logout">Logout</Link>
+      </Box>
     </nav>
   );
 };
