@@ -5,7 +5,7 @@ import Link from "next/link";
 import { AiFillBug } from "react-icons/ai";
 import { usePathname } from "next/navigation";
 import classnames from "classnames";
-import { Box } from "@radix-ui/themes";
+import { Box, Container, Flex } from "@radix-ui/themes";
 const NavBar = () => {
   const currentPath = usePathname();
   const links = [
@@ -14,30 +14,38 @@ const NavBar = () => {
   ];
 
   return (
-    <nav className="flex space-x-6 border-b mb-5 px-5 h-14 items-center">
-      <Link href="/">
-        <AiFillBug />
-      </Link>
-      <ul className="flex space-x-6">
-        {links.map((link) => (
-          <li key={link.href}>
-            <Link
-              className={classnames({
-                "text-zinc-900": link.href === currentPath,
-                "text-zinc-500": link.href !== currentPath,
-                "hover:text-zinc-800 transitions-colors": true,
-              })}
-              href={link.href}
-            >
-              {link.label}
+    <nav className="border-b mb-5 px-5 py-3 ">
+      <Container>
+        <Flex justify="between">
+          <Flex align="center" gap="3">
+            <Link href="/">
+              <AiFillBug />
             </Link>
-          </li>
-        ))}
-      </ul>
-      <Box>
-        <Link href="/login">Login</Link>
-        <Link href="/logout">Logout</Link>
-      </Box>
+            <ul className="flex space-x-6">
+              {links.map((link) => (
+                <li key={link.href}>
+                  <Link
+                    className={classnames({
+                      "text-zinc-900": link.href === currentPath,
+                      "text-zinc-500": link.href !== currentPath,
+                      "hover:text-zinc-800 transitions-colors": true,
+                    })}
+                    href={link.href}
+                  >
+                    {link.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </Flex>
+          <Box>
+            <Box>
+              <Link href="/login">Login</Link>
+              <Link href="/logout">Logout</Link>
+            </Box>
+          </Box>
+        </Flex>
+      </Container>
     </nav>
   );
 };
