@@ -1,5 +1,5 @@
 import { AlertDialog, Button, Flex } from "@radix-ui/themes";
-import useDeleteIssue from "@/app/hooks/useDeleteIssue";
+import useDeleteIssue from "@/app/hooks/issues/useDeleteIssue";
 import { useState } from "react";
 import { Spinner } from "@/app/components";
 

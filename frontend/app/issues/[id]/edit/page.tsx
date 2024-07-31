@@ -1,6 +1,6 @@
 "use client";
 import IssueForm from "@/app/issues/_components/IssueForm";
-import useIssue from "@/app/hooks/useIssue";
+import useIssue from "@/app/hooks/issues/useIssue";
 
 interface Props {
   params: { id: string };

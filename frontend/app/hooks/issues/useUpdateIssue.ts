@@ -1,6 +1,6 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import APIClient from "@/app/services/api-client";
-import useCreateIssue from "@/app/hooks/useCreateIssue";
+import useCreateIssue from "@/app/hooks/issues/useCreateIssue";
 import { useRouter } from "next/navigation";
 import { parseMaybeAssign } from "sucrase/dist/types/parser/traverser/expression";
 import { useState } from "react";
@@ -24,6 +24,7 @@ const useUpdateIssue = (id: number) => {
     onSuccess: async () => {
       router.push(`/issues/${id}/`);
       await client.invalidateQueries({ queryKey: ["issue", id] });
+      await client.invalidateQueries({ queryKey: ["issues"] });
     },
     onError: () => {
       setError("An unexpected error occurred");

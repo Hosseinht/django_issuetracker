@@ -15,7 +15,7 @@ const useCreateIssue = () => {
   const [isLoading, setLoading] = useState(false);
 
   const { mutate } = useMutation({
-    mutationFn: (data: CreateIssue) => apiClient.create(data),
+    mutationFn: (data: CreateIssue) => apiClient.post(data),
     onSuccess: async () => {
       router.push("/issues");
       await client.invalidateQueries({ queryKey: ["issues"] });

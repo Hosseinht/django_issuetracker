@@ -1,6 +1,6 @@
 "use client";
 
-import useIssue from "@/app/hooks/useIssue";
+import useIssue from "@/app/hooks/issues/useIssue";
 import { notFound } from "next/navigation";
 import { Box, Flex, Grid } from "@radix-ui/themes";
 import LoadingIssueDetailPage from "@/app/issues/[id]/loading";

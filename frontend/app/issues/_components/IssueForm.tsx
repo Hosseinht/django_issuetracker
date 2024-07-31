@@ -10,9 +10,9 @@ import { issueSchema } from "@/app/validationSchemas";
 import { z } from "zod";
 import ErrorMessage from "@/app/components/ErrorMessage";
 import Spinner from "@/app/components/Spinner";
-import useCreateIssue from "@/app/hooks/useCreateIssue";
+import useCreateIssue from "@/app/hooks/issues/useCreateIssue";
 import { Issue } from "@/app/entities/Issue";
-import useUpdateIssue from "@/app/hooks/useUpdateIssue";
+import useUpdateIssue from "@/app/hooks/issues/useUpdateIssue";
 
 type IssueFormData = z.infer<typeof issueSchema>;
 
