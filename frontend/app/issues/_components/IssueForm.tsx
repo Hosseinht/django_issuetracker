@@ -21,14 +21,14 @@ const IssueForm = ({ issue }: { issue?: Issue }) => {
   const {
     createIssue,
     error: createError,
-    isLoading: createLoading,
+    isPending: createIssuePending,
   } = useCreateIssue();
   const {
     updateIssue,
     error: updateError,
-    isLoading: updateLoading,
+    isPending: updateIssuePending,
   } = useUpdateIssue(id ?? 0);
-
+  console.log(createIssuePending);
   const {
     register,
     control,
@@ -92,10 +92,10 @@ const IssueForm = ({ issue }: { issue?: Issue }) => {
             />
           </div>
         )}
-
-        <Button disabled={createLoading || updateLoading}>
+        {/*prettier-ignore*/}
+        <Button disabled={createIssuePending || updateIssuePending}>
           {issue ? "Update Issue" : "Submit New Issue"}
-          {createLoading || (updateLoading && <Spinner />)}
+          {createIssuePending || updateIssuePending && <Spinner />}
         </Button>
       </form>
     </div>

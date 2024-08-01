@@ -2,6 +2,7 @@ import APIClient from "@/app/services/api-client";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import delay from "delay";
 
 interface CreateIssue {
   title: string;
@@ -12,9 +13,8 @@ const useCreateIssue = () => {
   const client = useQueryClient();
   const router = useRouter();
   const [error, setError] = useState("");
-  const [isLoading, setLoading] = useState(false);
 
-  const { mutate } = useMutation({
+  const { mutate, isPending } = useMutation({
     mutationFn: (data: CreateIssue) => apiClient.post(data),
     onSuccess: async () => {
       router.push("/issues");
@@ -22,12 +22,6 @@ const useCreateIssue = () => {
     },
     onError: (error) => {
       setError("An unexpected error occurred.");
-    },
-    onMutate: () => {
-      setLoading(true);
-    },
-    onSettled: () => {
-      setLoading(false);
     },
   });
 
@@ -38,7 +32,7 @@ const useCreateIssue = () => {
   return {
     createIssue,
     error,
-    isLoading,
+    isPending,
   };
 };
 

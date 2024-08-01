@@ -17,9 +17,9 @@ const useUpdateIssue = (id: number) => {
   const client = useQueryClient();
   const router = useRouter();
   const [error, setError] = useState("");
-  const [isLoading, setLoading] = useState(false);
+  // const [isLoading, setLoading] = useState(false);
 
-  const { mutate } = useMutation({
+  const { mutate, isPending } = useMutation({
     mutationFn: (data: updateIssue) => apiClient.update(id, data),
     onSuccess: async () => {
       router.push(`/issues/${id}/`);
@@ -29,12 +29,6 @@ const useUpdateIssue = (id: number) => {
     onError: () => {
       setError("An unexpected error occurred");
     },
-    onMutate: () => {
-      setLoading(true);
-    },
-    onSettled: () => {
-      setLoading(false);
-    },
   });
   const updateIssue = (data: updateIssue) => {
     mutate(data);
@@ -42,7 +36,7 @@ const useUpdateIssue = (id: number) => {
   return {
     updateIssue,
     error,
-    isLoading,
+    isPending,
   };
 };
 
