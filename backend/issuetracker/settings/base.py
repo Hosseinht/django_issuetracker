@@ -83,6 +83,7 @@ CORS_ALLOWED_ORIGINS = [
     "http://127.0.0.1:3000",
     "http://localhost:3000",
 ]
+CORS_ALLOW_CREDENTIALS = True
 
 TEMPLATES = [
     {
@@ -150,14 +151,14 @@ STATIC_ROOT = BASE_DIR / "static"
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 REST_FRAMEWORK = {
-    "DEFAULT_AUTHENTICATION_CLASSES": (
-        "rest_framework_simplejwt.authentication.JWTAuthentication",
-    ),
+    "DEFAULT_AUTHENTICATION_CLASSES": ("users.authentication.JWTCookieAuthentication",),
 }
 SIMPLE_JWT = {
     "AUTH_HEADER_TYPES": ("JWT",),
     "ACCESS_TOKEN_LIFETIME": timedelta(days=10),
     "REFRESH_TOKEN_LIFETIME": timedelta(days=10),
+    "َACCESS_TOKEN_NAME": "access_token",
+    "REFRESH_TOKEN_NAME": "refresh_token",
 }
 
 DJOSER = {
@@ -173,6 +174,7 @@ DJOSER = {
     },
 }
 
+
 AUTH_USER_MODEL = "users.User"
 
 APPEND_SLASH = False
@@ -183,3 +185,6 @@ EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_HOST_PASSWORD = env("EMAIL_HOST_PASSWORD")
 EMAIL_HOST_USER = env("EMAIL_HOST_USER")
+
+DOMAIN = env("DOMAIN")
+SITE_NAME = "Issue Tracker"

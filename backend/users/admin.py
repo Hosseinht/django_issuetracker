@@ -57,7 +57,7 @@ class AdminUser(UserAdmin):
             },
         ),
     )
-    list_display = ["email", "is_staff"]
+    list_display = ["email", "is_staff", "is_active"]
 
 
 admin.site.register(User, AdminUser)

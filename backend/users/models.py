@@ -1,8 +1,5 @@
-from django.contrib.auth.models import (
-    AbstractBaseUser,
-    BaseUserManager,
-    PermissionsMixin,
-)
+from django.contrib.auth.models import (AbstractBaseUser, BaseUserManager,
+                                        PermissionsMixin)
 from django.db import models
 from django.utils import timezone
 
@@ -17,7 +14,9 @@ class UserManager(BaseUserManager):
             raise ValueError("User must have an email address")
 
         user = self.model(
-            email=self.normalize_email(email.lower()), name=name, **extra_fields
+            email=self.normalize_email(email.lower()),
+            name=name,
+            **extra_fields,
         )
 
         user.set_password(password)
@@ -37,7 +36,10 @@ class UserManager(BaseUserManager):
             raise ValueError("Superuser must be assigned to is_superuser=True.")
 
         user = self.create_user(
-            email=email, name=name, password=password, **extra_fields
+            email=email,
+            name=name,
+            password=password,
+            **extra_fields,
         )
 
         user.save(using=self._db)
@@ -55,6 +57,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     objects = UserManager()
 
     USERNAME_FIELD = "email"
+    # REQUIRED_FIELDS = ["name"]
 
     def __str__(self):
         return self.email
