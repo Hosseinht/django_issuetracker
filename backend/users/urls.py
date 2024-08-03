@@ -1,9 +1,15 @@
-from django.urls import path
+from django.urls import path, re_path
 
-from .views import (JWTCookieTokenObtainPairView, JWTCookieTokenRefreshView,
-                    JWTCookieTokenVerifyView, LogoutView)
+from .views import (
+    JWTCookieTokenObtainPairView,
+    JWTCookieTokenRefreshView,
+    JWTCookieTokenVerifyView,
+    JWTProviderAuthView,
+    LogoutView,
+)
 
 urlpatterns = [
+    path("google-oauth2/", JWTProviderAuthView.as_view(), name="provider-auth"),
     path(
         "jwt/create/", JWTCookieTokenObtainPairView.as_view(), name="create-jwt-token"
     ),

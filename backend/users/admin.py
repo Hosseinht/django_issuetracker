@@ -14,7 +14,13 @@ class AdminUser(UserAdmin):
         ),
         (
             "Personal Info",
-            {"fields": ("email",)},
+            {
+                "fields": (
+                    "email",
+                    "first_name",
+                    "last_name",
+                )
+            },
         ),
         (
             "Permissions",
@@ -49,7 +55,8 @@ class AdminUser(UserAdmin):
                     "password1",
                     "password2",
                     "email",
-                    "name",
+                    "first_name",
+                    "last_name",
                     "is_active",
                     "is_staff",
                     "is_superuser",

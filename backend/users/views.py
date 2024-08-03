@@ -1,4 +1,5 @@
 from django.conf import settings
+from djoser.social.views import ProviderAuthView
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -12,7 +13,8 @@ from users.serializers import CustomTokenRefreshSerializer
 
 
 class JWTSetCookieMixin:
-    #  ensures that the generated JWT tokens are sent to the client as cookies
+    """Mixin to set JWT tokens as cookies in the response."""
+
     def finalize_response(self, request, response, *args, **kwargs):
         if response.data.get("refresh"):
             response.set_cookie(
@@ -50,6 +52,12 @@ class JWTCookieTokenVerifyView(TokenVerifyView):
         if access_token:
             request.data["token"] = access_token
         return super().post(request, *args, **kwargs)
+
+
+class JWTProviderAuthView(JWTSetCookieMixin, ProviderAuthView):
+    """View for social authentication with JWT token set as a cookie."""
+
+    pass
 
 
 class LogoutView(APIView):
