@@ -1,26 +1,24 @@
 import AuthClient from "@/app/services/auth-client";
 import { useMutation } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
 
 interface CreateUser {
   email: string;
-  name?: string;
+  first_name?: string;
+  last_name?: string;
   password: string;
+  re_password: string;
 }
 
 const authClient = new AuthClient<CreateUser>("/users/");
 
 const useCreateUser = () => {
   const router = useRouter();
-  const [error, setError] = useState("");
-  const { mutate, isPending } = useMutation({
+
+  const { mutate, isPending, error } = useMutation({
     mutationFn: (data: CreateUser) => authClient.post(data),
     onSuccess: () => {
       router.push("/issues");
-    },
-    onError: () => {
-      setError("An unexpected error occurred");
     },
   });
   const createUser = (data: CreateUser) => {

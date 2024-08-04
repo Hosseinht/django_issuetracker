@@ -12,11 +12,12 @@ export const signupSchema = z
       .string()
       .email("Invalid email address.")
       .min(1, "Email is required."),
-    name: z.optional(z.string()),
+    first_name: z.optional(z.string()),
+    last_name: z.optional(z.string()),
     password: z.string().min(1, "Password is required."),
-    confirmPassword: z.string().min(1, "Confirm password is required."),
+    re_password: z.string().min(1, "Confirm password is required."),
   })
-  .refine((data) => data.password === data.confirmPassword, {
+  .refine((data) => data.password === data.re_password, {
     message: "Passwords do not match.",
-    path: ["confirmPassword"],
+    path: ["re_password"],
   });

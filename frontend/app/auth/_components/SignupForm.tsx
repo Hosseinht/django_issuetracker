@@ -11,6 +11,7 @@ import Link from "@/app/components/Link";
 import { useState } from "react";
 import useCreateUser from "@/app/hooks/auth/useCreateUser";
 import Spinner from "@/app/components/Spinner";
+import { AxiosError } from "axios";
 
 type signupData = z.infer<typeof signupSchema>;
 
@@ -31,11 +32,33 @@ const SignupForm = () => {
 
   return (
     <div className="max-w-xl">
-      {error && <ErrorMessage>{error}</ErrorMessage>}
+      {error && (
+        <ErrorMessage>
+          {error && (
+            <ul className="mb-3">
+              {(() => {
+                const errorData = (error as AxiosError)?.response?.data as {
+                  [key: string]: string[];
+                };
+                return Object.keys(errorData).map((field: string) => (
+                  <ul>
+                    {errorData[field].map(
+                      (errorMessage: string, index: number) => (
+                        <li key={index}>{errorMessage}</li>
+                      ),
+                    )}
+                  </ul>
+                ));
+              })()}
+            </ul>
+          )}
+        </ErrorMessage>
+      )}
       <form className="space-y-3" onSubmit={onSubmit}>
         <TextField.Root placeholder="Email" {...register("email")} />
         <ErrorMessage>{errors.email?.message}</ErrorMessage>
-        <TextField.Root placeholder="Name" {...register("name")} />
+        <TextField.Root placeholder="First Name" {...register("first_name")} />
+        <TextField.Root placeholder="Last Name" {...register("last_name")} />
         <TextField.Root
           type="password"
           placeholder="Password"
@@ -45,9 +68,9 @@ const SignupForm = () => {
         <TextField.Root
           type="password"
           placeholder="Confirm Password"
-          {...register("confirmPassword")}
+          {...register("re_password")}
         />
-        <ErrorMessage>{errors.confirmPassword?.message}</ErrorMessage>
+        <ErrorMessage>{errors.re_password?.message}</ErrorMessage>
         <Button disabled={isPending}>
           {isPending ? <Spinner /> : "Sign Up"}
         </Button>
