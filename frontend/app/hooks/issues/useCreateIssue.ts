@@ -2,7 +2,6 @@ import APIClient from "@/app/services/api-client";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import delay from "delay";
 
 interface CreateIssue {
   title: string;

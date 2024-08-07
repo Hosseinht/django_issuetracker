@@ -1,5 +1,6 @@
 from django.conf import settings
 from djoser.social.views import ProviderAuthView
+from djoser.views import UserViewSet
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -9,7 +10,7 @@ from rest_framework_simplejwt.views import (
     TokenVerifyView,
 )
 
-from users.serializers import CustomTokenRefreshSerializer
+from users.serializers import CustomActivationSerializer, CustomTokenRefreshSerializer
 
 
 class JWTSetCookieMixin:
@@ -68,3 +69,10 @@ class LogoutView(APIView):
         response.delete_cookie("refresh_token")
 
         return response
+
+
+class CustomUserViewSet(UserViewSet):
+    def get_serializer_class(self):
+        if self.action == "activation":  # noqa
+            return CustomActivationSerializer
+        return super().get_serializer_class()

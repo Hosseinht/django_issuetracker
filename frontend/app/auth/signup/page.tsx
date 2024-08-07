@@ -1,10 +1,10 @@
-import React from "react";
-import UserRegisterForm from "@/app/auth/_components/SignupForm";
+"use client";
+import SignupForm from "@/app/auth/_components/SignupForm";
 
 const Signup = () => {
   return (
     <div>
-      <UserRegisterForm />
+      <SignupForm />
     </div>
   );
 };

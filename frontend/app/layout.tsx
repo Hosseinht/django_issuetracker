@@ -4,9 +4,12 @@ import "./globals.css";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import NavBar from "@/app/NavBar";
-import { Container, Theme, ThemePanel } from "@radix-ui/themes";
+import { Container, Theme } from "@radix-ui/themes";
 import QueryClientProvider from "@/app/QueryClientProvider";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 
@@ -26,6 +29,7 @@ export default function RootLayout({
         <QueryClientProvider>
           <Theme accentColor="orange">
             <NavBar />
+            <ToastContainer />
             <main className="p-5">
               <Container>{children}</Container>{" "}
             </main>

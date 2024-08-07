@@ -1,5 +1,4 @@
-"use client";
-import { Box, Button, Text, TextField } from "@radix-ui/themes";
+import { Box, Button, TextField } from "@radix-ui/themes";
 
 import "easymde/dist/easymde.min.css";
 import { useForm } from "react-hook-form";
@@ -8,7 +7,6 @@ import { signupSchema } from "@/app/validationSchemas";
 import { z } from "zod";
 import ErrorMessage from "@/app/components/ErrorMessage";
 import Link from "@/app/components/Link";
-import { useState } from "react";
 import useCreateUser from "@/app/hooks/auth/useCreateUser";
 import Spinner from "@/app/components/Spinner";
 import { AxiosError } from "axios";
@@ -26,7 +24,7 @@ const SignupForm = () => {
 
   const { createUser, isPending, error } = useCreateUser();
 
-  const onSubmit = handleSubmit(async (data: signupData) => {
+  const onSubmit = handleSubmit((data: signupData) => {
     createUser(data);
   });
 
@@ -72,7 +70,8 @@ const SignupForm = () => {
         />
         <ErrorMessage>{errors.re_password?.message}</ErrorMessage>
         <Button disabled={isPending}>
-          {isPending ? <Spinner /> : "Sign Up"}
+          Sign Up
+          {isPending && <Spinner />}
         </Button>
         <Box>
           Already have an account? <Link href="/login">Log In</Link>

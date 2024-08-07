@@ -1,8 +1,6 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import APIClient from "@/app/services/api-client";
-import useCreateIssue from "@/app/hooks/issues/useCreateIssue";
 import { useRouter } from "next/navigation";
-import { parseMaybeAssign } from "sucrase/dist/types/parser/traverser/expression";
 import { useState } from "react";
 
 interface updateIssue {

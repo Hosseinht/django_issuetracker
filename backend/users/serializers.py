@@ -1,9 +1,16 @@
 from django.conf import settings
+from django.contrib.auth import get_user_model
+from django.utils import timezone
+from djoser import utils
+from djoser.serializers import ActivationSerializer
 from djoser.serializers import UserCreateSerializer as BaseUserCreateSerializer
 from djoser.serializers import UserSerializer as BaseUserSerializer
 from rest_framework import serializers
+from rest_framework.exceptions import ValidationError
 from rest_framework_simplejwt.exceptions import InvalidToken
 from rest_framework_simplejwt.serializers import TokenRefreshSerializer
+
+User = get_user_model()
 
 
 class UserCreateSerializer(BaseUserCreateSerializer):
@@ -29,3 +36,29 @@ class CustomTokenRefreshSerializer(TokenRefreshSerializer):
             return super().validate(attrs)
         else:
             raise InvalidToken("No valid refresh token found")
+
+
+class CustomActivationSerializer(ActivationSerializer):
+    def validate(self, attrs):
+        try:
+            uid = utils.decode_uid(self.initial_data.get("uid", ""))
+            self.user = User.objects.get(pk=uid)  # noqa
+        except (User.DoesNotExist, ValueError, TypeError, OverflowError):
+            raise ValidationError({"detail": "User does not exist"})
+
+        if (
+            self.user.date_joined + settings.DJOSER["USER_ACTIVATION_TIMEOUT"]
+            < timezone.now()
+        ):
+            raise ValidationError({"detail": "Activation link has expired"})
+
+        if self.user.is_active:
+            raise ValidationError({"detail": "User is already active"})
+
+        is_token_valid = self.context["view"].token_generator.check_token(
+            self.user, self.initial_data.get("token", "")
+        )
+        if not is_token_valid:
+            raise ValidationError({"detail": "Failed to activate account"})
+
+        return attrs
