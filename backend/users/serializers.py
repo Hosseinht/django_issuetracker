@@ -45,15 +45,13 @@ class CustomActivationSerializer(ActivationSerializer):
             self.user = User.objects.get(pk=uid)  # noqa
         except (User.DoesNotExist, ValueError, TypeError, OverflowError):
             raise ValidationError({"detail": "User does not exist"})
-
-        if (
-            self.user.date_joined + settings.DJOSER["USER_ACTIVATION_TIMEOUT"]
-            < timezone.now()
-        ):
-            raise ValidationError({"detail": "Activation link has expired"})
-
+        
         if self.user.is_active:
             raise ValidationError({"detail": "User is already active"})
+
+        if self.user.date_joined + settings.DJOSER["USER_ACTIVATION_TIMEOUT"] < timezone.now():
+            raise ValidationError({"detail": "Activation link has expired"})
+
 
         is_token_valid = self.context["view"].token_generator.check_token(
             self.user, self.initial_data.get("token", "")

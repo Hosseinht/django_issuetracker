@@ -14,9 +14,6 @@ const useActivatingUser = () => {
 
   const { mutate, error, isPending, isSuccess } = useMutation({
     mutationFn: (data: UserActivation) => authClient.post(data),
-    onSuccess: () => {
-      // router.push("/login");
-    },
   });
   return { mutate, error, isPending, isSuccess };
 };

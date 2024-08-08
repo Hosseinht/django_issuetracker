@@ -160,7 +160,7 @@ REST_FRAMEWORK = {
 
 SIMPLE_JWT = {
     "AUTH_HEADER_TYPES": ("JWT",),
-    "ACCESS_TOKEN_LIFETIME": timedelta(seconds=60),
+    "ACCESS_TOKEN_LIFETIME": timedelta(days=60),
     "REFRESH_TOKEN_LIFETIME": timedelta(days=60),
     "َACCESS_TOKEN_NAME": "access_token",
     "REFRESH_TOKEN_NAME": "refresh_token",
@@ -168,7 +168,7 @@ SIMPLE_JWT = {
 }
 
 DJOSER = {
-    "USER_ACTIVATION_TIMEOUT": timedelta(seconds=60),
+    "USER_ACTIVATION_TIMEOUT": timedelta(days=1),
     "PASSWORD_RESET_CONFIRM_URL": "password-reset/confirm/{uid}/{token}",
     "SEND_ACTIVATION_EMAIL": True,
     "ACTIVATION_URL": "auth/activation/{uid}/{token}",

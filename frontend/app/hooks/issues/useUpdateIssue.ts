@@ -15,7 +15,6 @@ const useUpdateIssue = (id: number) => {
   const client = useQueryClient();
   const router = useRouter();
   const [error, setError] = useState("");
-  // const [isLoading, setLoading] = useState(false);
 
   const { mutate, isPending } = useMutation({
     mutationFn: (data: updateIssue) => apiClient.update(id, data),
