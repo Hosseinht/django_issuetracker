@@ -10,8 +10,6 @@ interface UserActivation {
 const authClient = new AuthClient<UserActivation>("/users/activation/");
 
 const useActivatingUser = () => {
-  const router = useRouter();
-
   const { mutate, error, isPending, isSuccess } = useMutation({
     mutationFn: (data: UserActivation) => authClient.post(data),
   });

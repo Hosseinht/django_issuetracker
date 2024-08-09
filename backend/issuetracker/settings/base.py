@@ -168,7 +168,7 @@ SIMPLE_JWT = {
 }
 
 DJOSER = {
-    "USER_ACTIVATION_TIMEOUT": timedelta(days=1),
+    "USER_ACTIVATION_TIMEOUT": timedelta(days=11),
     "PASSWORD_RESET_CONFIRM_URL": "password-reset/confirm/{uid}/{token}",
     "SEND_ACTIVATION_EMAIL": True,
     "ACTIVATION_URL": "auth/activation/{uid}/{token}",

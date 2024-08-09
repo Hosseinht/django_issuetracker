@@ -21,3 +21,10 @@ export const signupSchema = z
     message: "Passwords do not match.",
     path: ["re_password"],
   });
+
+export const emailSchema = z.object({
+  email: z
+    .string()
+    .email("Invalid email address.")
+    .min(1, "Email is required."),
+});
