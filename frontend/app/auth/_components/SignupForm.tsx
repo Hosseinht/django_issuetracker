@@ -11,47 +11,46 @@ import useCreateUser from "@/app/hooks/auth/useCreateUser";
 import Spinner from "@/app/components/Spinner";
 import { AxiosError } from "axios";
 
-type signupData = z.infer<typeof signupSchema>;
+type SignupFormData = z.infer<typeof signupSchema>;
 
 const SignupForm = () => {
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<signupData>({
+  } = useForm<SignupFormData>({
     resolver: zodResolver(signupSchema),
   });
 
   const { createUser, isPending, error } = useCreateUser();
 
-  const onSubmit = handleSubmit((data: signupData) => {
+  const onSubmit = handleSubmit((data: SignupFormData) => {
     createUser(data);
   });
 
   return (
     <div className="max-w-xl">
-      {error && (
-        <ErrorMessage>
-          {error && (
-            <ul className="mb-3">
-              {(() => {
-                const errorData = (error as AxiosError)?.response?.data as {
-                  [key: string]: string[];
-                };
-                return Object.keys(errorData).map((field: string) => (
-                  <ul>
-                    {errorData[field].map(
-                      (errorMessage: string, index: number) => (
-                        <li key={index}>{errorMessage}</li>
-                      ),
-                    )}
-                  </ul>
-                ));
-              })()}
-            </ul>
-          )}
-        </ErrorMessage>
-      )}
+      <ErrorMessage>
+        {error && (
+          <>
+            {(() => {
+              const errorData = (error as AxiosError)?.response?.data as {
+                [key: string]: string[];
+              };
+              return Object.keys(errorData).map((field: string) => (
+                <ul className="mb-3">
+                  {errorData[field].map(
+                    (errorMessage: string, index: number) => (
+                      <li key={index}>{errorMessage}</li>
+                    ),
+                  )}
+                </ul>
+              ));
+            })()}
+          </>
+        )}
+      </ErrorMessage>
+
       <form className="space-y-3" onSubmit={onSubmit}>
         <TextField.Root placeholder="Email" {...register("email")} />
         <ErrorMessage>{errors.email?.message}</ErrorMessage>
@@ -74,7 +73,7 @@ const SignupForm = () => {
           {isPending && <Spinner />}
         </Button>
         <Box>
-          Already have an account? <Link href="/login">Log In</Link>
+          Already have an account? <Link href="/auth/login">Log In</Link>
         </Box>
       </form>
     </div>

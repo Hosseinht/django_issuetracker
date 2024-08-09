@@ -1,6 +1,11 @@
 "use client";
-import SignupForm from "@/app/auth/_components/SignupForm";
 
+import dynamic from "next/dynamic";
+import LoadingCreateUserPage from "@/app/auth/signup/loading";
+const SignupForm = dynamic(() => import("@/app/auth/_components/SignupForm"), {
+  ssr: false,
+  loading: () => <LoadingCreateUserPage />,
+});
 const Signup = () => {
   return (
     <div>
