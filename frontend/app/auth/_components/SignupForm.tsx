@@ -1,4 +1,12 @@
-import { Box, Button, Flex, Grid, TextField } from "@radix-ui/themes";
+import {
+  Box,
+  Button,
+  Flex,
+  Grid,
+  TextField,
+  Text,
+  Heading,
+} from "@radix-ui/themes";
 
 import "easymde/dist/easymde.min.css";
 import { useForm } from "react-hook-form";
@@ -52,6 +60,10 @@ const SignupForm = () => {
       </ErrorMessage>
 
       <form className="space-y-3" onSubmit={onSubmit}>
+        <Box mb="40px" className="text-center">
+          <Heading mb="2">Signup</Heading>
+          <Text>Create a new account to get started.</Text>
+        </Box>
         <TextField.Root placeholder="Email" {...register("email")} />
         <ErrorMessage>{errors.email?.message}</ErrorMessage>
         <Grid columns="2" gap="2">
