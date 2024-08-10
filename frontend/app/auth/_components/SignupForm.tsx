@@ -1,4 +1,4 @@
-import { Box, Button, TextField } from "@radix-ui/themes";
+import { Box, Button, Flex, Grid, TextField } from "@radix-ui/themes";
 
 import "easymde/dist/easymde.min.css";
 import { useForm } from "react-hook-form";
@@ -29,7 +29,7 @@ const SignupForm = () => {
   });
 
   return (
-    <div className="max-w-xl">
+    <Flex height="50vh" justify="center" align="center" direction="column">
       <ErrorMessage>
         {error && (
           <>
@@ -54,8 +54,14 @@ const SignupForm = () => {
       <form className="space-y-3" onSubmit={onSubmit}>
         <TextField.Root placeholder="Email" {...register("email")} />
         <ErrorMessage>{errors.email?.message}</ErrorMessage>
-        <TextField.Root placeholder="First Name" {...register("first_name")} />
-        <TextField.Root placeholder="Last Name" {...register("last_name")} />
+        <Grid columns="2" gap="2">
+          <TextField.Root
+            placeholder="First Name"
+            {...register("first_name")}
+          />
+          <TextField.Root placeholder="Last Name" {...register("last_name")} />
+        </Grid>
+
         <TextField.Root
           type="password"
           placeholder="Password"
@@ -68,7 +74,8 @@ const SignupForm = () => {
           {...register("re_password")}
         />
         <ErrorMessage>{errors.re_password?.message}</ErrorMessage>
-        <Button disabled={isPending}>
+
+        <Button className="wide-button" disabled={isPending}>
           Sign Up
           {isPending && <Spinner />}
         </Button>
@@ -76,7 +83,7 @@ const SignupForm = () => {
           Already have an account? <Link href="/auth/login">Log In</Link>
         </Box>
       </form>
-    </div>
+    </Flex>
   );
 };
 

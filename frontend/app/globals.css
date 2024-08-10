@@ -19,7 +19,9 @@ body {
 
 }
 
-
+.wide-button { /* Target the button within your form */
+  width: 100% !important;
+}
 
 @layer utilities {
   .text-balance {
