@@ -13,22 +13,29 @@ interface CreateUser {
   re_password: string;
 }
 
+export interface ErrorData {
+  [key: string]: string[] | string;
+}
+
 const authClient = new AuthClient<CreateUser>("/users/");
 
 const useCreateUser = () => {
   const router = useRouter();
-  const [errorData, setErrorData] = useState(null);
+  const [errorData, setErrorData] = useState<ErrorData | null>(null);
 
-  const { mutate, isPending, error } = useMutation({
+  const { mutate, error, isPending } = useMutation({
     mutationFn: (data: CreateUser) => authClient.post(data),
     onSuccess: () => {
       toast.success("Please check email to verify account");
       router.push("/issues");
     },
     onError: (error) => {
-      if (error instanceof AxiosError && error.response) {
-        const errorData = error.response.data;
-        setErrorData(errorData);
+      if (error instanceof AxiosError) {
+        if (error.response?.status === 404) {
+          setErrorData({ error: ["An unexpected error occurred."] });
+        } else {
+          setErrorData(error.response?.data as ErrorData);
+        }
       }
     },
   });

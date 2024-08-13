@@ -23,6 +23,10 @@ body {
   width: 100% !important;
 }
 
+.marginTop {
+  margin-top: 30px !important;
+}
+
 @layer utilities {
   .text-balance {
     text-wrap: balance;

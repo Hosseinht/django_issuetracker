@@ -1,5 +1,9 @@
-import LoginForm from "@/app/auth/_components/LoginForm";
-
+import dynamic from "next/dynamic";
+import LoadingLoginPage from "@/app/auth/login/loading";
+const LoginForm = dynamic(() => import("@/app/auth/_components/LoginForm"), {
+  ssr: false,
+  loading: () => <LoadingLoginPage />,
+});
 const Page = () => {
   return (
     <div>

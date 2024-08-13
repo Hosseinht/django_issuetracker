@@ -18,6 +18,8 @@ import Link from "@/app/components/Link";
 import useCreateUser from "@/app/hooks/auth/useCreateUser";
 import Spinner from "@/app/components/Spinner";
 import { AxiosError } from "axios";
+import SignupError from "@/app/auth/_components/SignupError";
+import React from "react";
 
 type SignupFormData = z.infer<typeof signupSchema>;
 
@@ -30,42 +32,26 @@ const SignupForm = () => {
     resolver: zodResolver(signupSchema),
   });
 
-  const { createUser, isPending, error } = useCreateUser();
+  const { createUser, isPending, error, errorData } = useCreateUser();
 
   const onSubmit = handleSubmit((data: SignupFormData) => {
     createUser(data);
   });
-
+  console.log("signup error", error);
+  console.log("signup errorData", errorData);
   return (
     <Flex height="50vh" justify="center" align="center" direction="column">
-      <ErrorMessage>
-        {error && (
-          <>
-            {(() => {
-              const errorData = (error as AxiosError)?.response?.data as {
-                [key: string]: string[];
-              };
-              return Object.keys(errorData).map((field: string) => (
-                <ul className="mb-3">
-                  {errorData[field].map(
-                    (errorMessage: string, index: number) => (
-                      <li key={index}>{errorMessage}</li>
-                    ),
-                  )}
-                </ul>
-              ));
-            })()}
-          </>
-        )}
-      </ErrorMessage>
-
       <form className="space-y-3" onSubmit={onSubmit}>
         <Box mb="40px" className="text-center">
           <Heading mb="2">Signup</Heading>
           <Text>Create a new account to get started.</Text>
         </Box>
+
+        <SignupError error={error} errorData={errorData} />
+
         <TextField.Root placeholder="Email" {...register("email")} />
         <ErrorMessage>{errors.email?.message}</ErrorMessage>
+
         <Grid columns="2" gap="2">
           <TextField.Root
             placeholder="First Name"

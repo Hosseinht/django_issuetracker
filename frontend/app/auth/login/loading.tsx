@@ -1,7 +1,8 @@
-import { Box, Flex, Grid, Heading, Text } from "@radix-ui/themes";
+import React from "react";
+import { Box, Flex } from "@radix-ui/themes";
 import { Skeleton } from "@/app/components";
 
-const LoadingSignupPage = () => {
+const LoadingLoginPage = () => {
   return (
     <Flex
       gap="1"
@@ -13,19 +14,19 @@ const LoadingSignupPage = () => {
     >
       <Box mb="40px" className="text-center">
         <Skeleton width="5rem" />
-        <Skeleton width="15rem" />
+        <Skeleton />
       </Box>
-      <Skeleton height="2rem" />
-      <Grid columns="2" gap="2">
-        <Skeleton height="2rem" />
-        <Skeleton height="2rem" />
-      </Grid>
+
       <Skeleton height="2rem" />
       <Skeleton height="2rem" />
-      <Skeleton height="2rem" className="max-w-md" />
-      <Skeleton height="1rem" width="16rem" />
+      <Skeleton height="2rem" />
+
+      <Flex direction="column" gap="2" className="marginTop">
+        <Skeleton width="10rem" />
+        <Skeleton width="18rem" />
+      </Flex>
     </Flex>
   );
 };
 
-export default LoadingSignupPage;
+export default LoadingLoginPage;

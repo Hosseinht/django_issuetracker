@@ -1,22 +1,20 @@
 "use client";
-import {
-  Box,
-  Button,
-  Card,
-  Flex,
-  Heading,
-  Text,
-  TextField,
-} from "@radix-ui/themes";
+import { Box, Button, Flex, Heading, Text, TextField } from "@radix-ui/themes";
 import ErrorMessage from "../../components/ErrorMessage";
 import Link from "../../components/Link";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { loginSchema } from "@/app/validationSchemas";
 import { z } from "zod";
+import useLoginUser from "@/app/hooks/auth/useLoginUser";
+import { AxiosError } from "axios";
+import { useState } from "react";
+import { Spinner } from "@/app/components";
 
 type LoginFormData = z.infer<typeof loginSchema>;
 const LoginForm = () => {
+  const { mutate, error, errorData, isPending } = useLoginUser();
+
   const {
     register,
     handleSubmit,
@@ -26,7 +24,7 @@ const LoginForm = () => {
   });
 
   const onSubmit = handleSubmit((data: LoginFormData) => {
-    console.log(data);
+    mutate(data);
   });
 
   return (
@@ -38,6 +36,12 @@ const LoginForm = () => {
           </Heading>
           <Text>Enter your email and password to access your account.</Text>
         </Box>
+
+        <ErrorMessage>{errorData}</ErrorMessage>
+        {error && !errorData && (
+          <ErrorMessage>An unexpected error occurred.</ErrorMessage>
+        )}
+
         <TextField.Root placeholder="Email" {...register("email")} />
         <ErrorMessage>{errors.email?.message}</ErrorMessage>
 
@@ -48,16 +52,12 @@ const LoginForm = () => {
         />
         <ErrorMessage>{errors.password?.message}</ErrorMessage>
 
-        <Button className="wide-button ">
+        <Button className="wide-button" disabled={isPending}>
           Log In
-          {/*{isPending && <Spinner />}*/}
+          {isPending && <Spinner />}
         </Button>
 
-        <Flex
-          direction="column"
-          gap="2"
-          style={{ marginTop: "30px !important" }}
-        >
+        <Flex direction="column" gap="2" className="marginTop">
           <Link href="/auth/forgot-password">Forgot password? </Link>
           <Text>
             Don't have an account? <Link href="/auth/signup"> Register</Link>{" "}

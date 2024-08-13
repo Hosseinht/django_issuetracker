@@ -82,7 +82,6 @@ INTERNAL_IPS = [
 CORS_ALLOWED_ORIGINS = [
     "http://127.0.0.1:8000",
     "http://127.0.0.1:3000",
-    "http://localhost:3000",
 ]
 CORS_ALLOW_CREDENTIALS = True
 
@@ -164,7 +163,7 @@ SIMPLE_JWT = {
     "REFRESH_TOKEN_LIFETIME": timedelta(days=60),
     "َACCESS_TOKEN_NAME": "access_token",
     "REFRESH_TOKEN_NAME": "refresh_token",
-    "JWT_COOKIE_SAMESITE": "None",
+    "JWT_COOKIE_SAMESITE": "Lax",
 }
 
 DJOSER = {
