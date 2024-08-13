@@ -18,6 +18,12 @@ class AuthClient<T> {
     });
     return res.data;
   };
+  getUser = async () => {
+    const res = await axiosInstance.get(this.endpoint, {
+      withCredentials: true,
+    });
+    return res.data;
+  };
 }
 
 export default AuthClient;

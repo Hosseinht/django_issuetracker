@@ -1,19 +1,12 @@
 "use client";
 
-import React from "react";
 import Link from "next/link";
 import { AiFillBug } from "react-icons/ai";
 import { usePathname } from "next/navigation";
 import classnames from "classnames";
-import {
-  Avatar,
-  Box,
-  Button,
-  Container,
-  DropdownMenu,
-  Flex,
-  Text,
-} from "@radix-ui/themes";
+import { Container, Flex } from "@radix-ui/themes";
+import UserProfileMenu from "@/app/components/UserProfileMenu";
+
 const NavBar = () => {
   const currentPath = usePathname();
   const links = [
@@ -46,31 +39,8 @@ const NavBar = () => {
               ))}
             </ul>
           </Flex>
-          <Box>
-            <Box>
-              <DropdownMenu.Root>
-                <DropdownMenu.Trigger>
-                  <Text>
-                    <Avatar
-                      fallback="?"
-                      size="2"
-                      radius="full"
-                      className="cursor-pointer"
-                    />
-                  </Text>
-                </DropdownMenu.Trigger>
-                <DropdownMenu.Content>
-                  <DropdownMenu.Label>
-                    <Text size="2">user@email.com</Text>
-                  </DropdownMenu.Label>
-                  <DropdownMenu.Item>
-                    <Link href="/logout">Log out</Link>
-                  </DropdownMenu.Item>
-                </DropdownMenu.Content>
-              </DropdownMenu.Root>
-              {/*<Link href="/login">Login</Link>*/}
-            </Box>
-          </Box>
+
+          <UserProfileMenu />
         </Flex>
       </Container>
     </nav>

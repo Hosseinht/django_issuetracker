@@ -1,5 +1,5 @@
 import AuthClient from "@/app/services/auth-client";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { AxiosError } from "axios";
 import { useState } from "react";
 import { toast } from "react-toastify";
@@ -13,12 +13,14 @@ interface LoginUser {
 const authClient = new AuthClient<LoginUser>("/jwt/create/");
 
 const useLoginUser = () => {
+  const client = useQueryClient();
   const router = useRouter();
   const [errorData, setErrorData] = useState(null);
   const { mutate, error, isPending } = useMutation({
     mutationFn: (data: LoginUser) => authClient.post(data),
-    onSuccess: () => {
+    onSuccess: async () => {
       toast.success("Logged in");
+      await client.invalidateQueries({ queryKey: ["user"] });
       router.push("/issues");
     },
     onError: (error) => {
