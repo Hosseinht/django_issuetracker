@@ -1,3 +1,4 @@
+from typing import Any, Dict
 from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.utils import timezone
@@ -8,7 +9,9 @@ from djoser.serializers import UserSerializer as BaseUserSerializer
 from rest_framework import serializers
 from rest_framework.exceptions import ValidationError
 from rest_framework_simplejwt.exceptions import InvalidToken
-from rest_framework_simplejwt.serializers import TokenRefreshSerializer
+from rest_framework_simplejwt.tokens import RefreshToken
+from rest_framework_simplejwt.settings import api_settings
+from rest_framework_simplejwt.serializers import TokenRefreshSerializer, TokenObtainPairSerializer
 
 User = get_user_model()
 
@@ -60,3 +63,14 @@ class CustomActivationSerializer(ActivationSerializer):
             raise ValidationError({"detail": "Failed to activate account"})
 
         return attrs
+
+class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
+    @classmethod
+    def get_token(cls, user):
+        token = super().get_token(user)
+
+       
+        token['email'] = user.email
+      
+
+        return token

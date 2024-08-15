@@ -6,14 +6,12 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { loginSchema } from "@/app/validationSchemas";
 import { z } from "zod";
-import useLoginUser from "@/app/hooks/auth/useLoginUser";
-import { AxiosError } from "axios";
-import { useState } from "react";
+import useLogin from "@/app/hooks/auth/useLogin";
 import { Spinner } from "@/app/components";
 
 type LoginFormData = z.infer<typeof loginSchema>;
 const LoginForm = () => {
-  const { mutate, error, errorData, isPending } = useLoginUser();
+  const { mutate, error, errorData, isPending } = useLogin();
 
   const {
     register,

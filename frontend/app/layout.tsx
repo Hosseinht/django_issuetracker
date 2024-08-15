@@ -1,7 +1,8 @@
+import React from "react";
+
 import "@radix-ui/themes/styles.css";
 import "./theme-config.css";
 import "./globals.css";
-import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import NavBar from "@/app/NavBar";
 import { Container, Theme } from "@radix-ui/themes";
@@ -10,6 +11,7 @@ import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { Metadata } from "next";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 

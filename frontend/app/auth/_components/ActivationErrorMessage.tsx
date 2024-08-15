@@ -1,5 +1,5 @@
 import React, { PropsWithChildren } from "react";
-import { Flex, Heading, Text } from "@radix-ui/themes";
+import { Flex } from "@radix-ui/themes";
 
 const ActivationErrorMessage = ({ children }: PropsWithChildren) => {
   return (

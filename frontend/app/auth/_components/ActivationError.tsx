@@ -1,7 +1,8 @@
 import { AxiosError } from "axios";
-import { Flex, Heading, Text } from "@radix-ui/themes";
+import { Heading, Text } from "@radix-ui/themes";
 import { Link } from "@/app/components";
 import ActivationErrorMessage from "@/app/auth/_components/ActivationErrorMessage";
+
 interface Props {
   error: AxiosError | Error | null;
   isPending: boolean;

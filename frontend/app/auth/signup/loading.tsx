@@ -1,4 +1,4 @@
-import { Box, Flex, Grid, Heading, Text } from "@radix-ui/themes";
+import { Box, Flex, Grid } from "@radix-ui/themes";
 import { Skeleton } from "@/app/components";
 
 const LoadingSignupPage = () => {

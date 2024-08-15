@@ -28,7 +28,7 @@ const IssueForm = ({ issue }: { issue?: Issue }) => {
     error: updateError,
     isPending: updateIssuePending,
   } = useUpdateIssue(id ?? 0);
-  console.log(createIssuePending);
+
   const {
     register,
     control,
@@ -49,7 +49,6 @@ const IssueForm = ({ issue }: { issue?: Issue }) => {
     } else {
       createIssue(data);
     }
-    // console.log(data);
   });
 
   return (

@@ -12,7 +12,7 @@ class AuthClient<T> {
     this.endpoint = endpoint;
   }
 
-  post = async (data: T) => {
+  post = async (data?: T) => {
     const res = await axiosInstance.post<T>(this.endpoint, data, {
       withCredentials: true,
     });

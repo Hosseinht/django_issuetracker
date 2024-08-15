@@ -3,9 +3,9 @@ import {
   Button,
   Flex,
   Grid,
-  TextField,
-  Text,
   Heading,
+  Text,
+  TextField,
 } from "@radix-ui/themes";
 
 import "easymde/dist/easymde.min.css";
@@ -17,7 +17,6 @@ import ErrorMessage from "@/app/components/ErrorMessage";
 import Link from "@/app/components/Link";
 import useCreateUser from "@/app/hooks/auth/useCreateUser";
 import Spinner from "@/app/components/Spinner";
-import { AxiosError } from "axios";
 import SignupError from "@/app/auth/_components/SignupError";
 import React from "react";
 
@@ -37,8 +36,7 @@ const SignupForm = () => {
   const onSubmit = handleSubmit((data: SignupFormData) => {
     createUser(data);
   });
-  console.log("signup error", error);
-  console.log("signup errorData", errorData);
+
   return (
     <Flex height="50vh" justify="center" align="center" direction="column">
       <form className="space-y-3" onSubmit={onSubmit}>

@@ -19,7 +19,7 @@ const useCreateIssue = () => {
       router.push("/issues");
       await client.invalidateQueries({ queryKey: ["issues"] });
     },
-    onError: (error) => {
+    onError: () => {
       setError("An unexpected error occurred.");
     },
   });

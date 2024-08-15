@@ -9,8 +9,9 @@ from rest_framework_simplejwt.views import (
     TokenRefreshView,
     TokenVerifyView,
 )
+from rest_framework.decorators import action
 
-from users.serializers import CustomActivationSerializer, CustomTokenRefreshSerializer
+from users.serializers import CustomActivationSerializer, CustomTokenRefreshSerializer, CustomTokenObtainPairSerializer
 
 
 class JWTSetCookieMixin:
@@ -44,7 +45,7 @@ class JWTSetCookieMixin:
 
 
 class JWTCookieTokenObtainPairView(JWTSetCookieMixin, TokenObtainPairView):
-    pass
+    serializer_class = CustomTokenObtainPairSerializer
 
 
 class JWTCookieTokenRefreshView(JWTSetCookieMixin, TokenRefreshView):
@@ -80,3 +81,23 @@ class CustomUserViewSet(UserViewSet):
         if self.action == "activation":  # noqa
             return CustomActivationSerializer
         return super().get_serializer_class()
+
+
+class AuthCheckView(APIView):
+    def get(self, request):
+        user = request.user
+
+        if user.is_authenticated:
+            user_data = {
+                'email': user.email,
+            }
+            response_data = {
+                'isAuthenticated': True,
+                'user': user_data
+            }
+            return Response(response_data, status=status.HTTP_200_OK)
+        else:
+            response_data = {
+                'isAuthenticated': False
+            }
+            return Response(response_data, status=status.HTTP_401_UNAUTHORIZED)

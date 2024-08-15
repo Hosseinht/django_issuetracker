@@ -1,5 +1,4 @@
 import AuthClient from "@/app/services/auth-client";
-import { useRouter } from "next/navigation";
 import { useMutation } from "@tanstack/react-query";
 
 interface UserActivation {

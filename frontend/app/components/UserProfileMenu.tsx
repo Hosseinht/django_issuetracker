@@ -1,58 +1,18 @@
-import { Avatar, Box, DropdownMenu, Text } from "@radix-ui/themes";
+import { Avatar, Box, Button, DropdownMenu, Text } from "@radix-ui/themes";
 import Link from "next/link";
-
-import useFetchUser from "@/app/hooks/auth/useFetchUser";
-import Spinner from "@/app/components/Spinner";
+import useLogout from "@/app/hooks/auth/useLogout";
+import useAuthStore from "@/app/store";
 
 const UserProfileMenu = () => {
-  const { data: user, isPending, error } = useFetchUser();
-  if (isPending) {
-    return (
-      <Box>
-        <DropdownMenu.Root>
-          <DropdownMenu.Trigger>
-            <Text>
-              <Avatar
-                fallback="?"
-                size="2"
-                radius="full"
-                className="cursor-pointer"
-              />
-            </Text>
-          </DropdownMenu.Trigger>
-          <DropdownMenu.Content>
-            <DropdownMenu.Item>
-              <Spinner />
-            </DropdownMenu.Item>
-          </DropdownMenu.Content>
-        </DropdownMenu.Root>
-      </Box>
-    );
-  }
-  if (error) {
-    return (
-      <Box>
-        <DropdownMenu.Root>
-          <DropdownMenu.Trigger>
-            <Text>
-              <Avatar
-                fallback="?"
-                size="2"
-                radius="full"
-                className="cursor-pointer"
-              />
-            </Text>
-          </DropdownMenu.Trigger>
-          <DropdownMenu.Content>
-            <Text>Error occurred</Text>
-            <DropdownMenu.Item>
-              <Link href="/auth/login">Log In</Link>
-            </DropdownMenu.Item>
-          </DropdownMenu.Content>
-        </DropdownMenu.Root>
-      </Box>
-    );
-  }
+  const { user, logout, isLoading } = useAuthStore();
+
+  const { mutate, isPending } = useLogout();
+
+  const onLogout = () => {
+    logout();
+    mutate();
+  };
+
   return (
     <Box>
       <DropdownMenu.Root>
@@ -66,15 +26,17 @@ const UserProfileMenu = () => {
             />
           </Text>
         </DropdownMenu.Trigger>
-        <DropdownMenu.Content>
+
+        <DropdownMenu.Content className="text-center">
           {user ? (
-            <Box className="justify-center">
+            <Box>
               <DropdownMenu.Label>
                 <Text size="2">{user?.email}</Text>
               </DropdownMenu.Label>
-              <DropdownMenu.Item className="justify-center">
-                <Link href="/auth/logout">Log out</Link>
-              </DropdownMenu.Item>
+
+              <Button className="wide-button " onClick={onLogout}>
+                Log out
+              </Button>
             </Box>
           ) : (
             <DropdownMenu.Item className="justify-center">

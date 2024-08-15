@@ -5,8 +5,7 @@ import { Issue } from "@/app/entities/Issue";
 const apiClient = new APIClient<Issue>("/issue");
 
 const useIssue = (id: number) => {
-  // console.log(id);
-  const { data, error, isLoading } = useQuery({
+  const { data, isLoading } = useQuery({
     queryKey: ["issue", id],
     queryFn: () => apiClient.getOne(id),
     staleTime: 60 * 1000,
