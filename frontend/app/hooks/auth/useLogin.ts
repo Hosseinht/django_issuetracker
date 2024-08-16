@@ -5,15 +5,13 @@ import { useState } from "react";
 import { toast } from "react-toastify";
 import { useRouter } from "next/navigation";
 import useAuthStore from "@/app/store";
+import { UserEmail } from "@/app/entities/User";
 
 interface LoginUser {
   email: string;
   password: string;
 }
 
-interface UserEmail {
-  email: string;
-}
 const authClient = new AuthClient<LoginUser>("/jwt/create/");
 const authUser = new AuthClient<UserEmail>("/users/me/");
 

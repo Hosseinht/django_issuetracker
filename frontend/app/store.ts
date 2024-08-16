@@ -1,14 +1,11 @@
 import { create } from "zustand";
-
-interface User {
-  email: string;
-}
+import { UserEmail } from "@/app/entities/User";
 
 interface AuthStore {
   isAuthenticated: boolean;
   isLoading: boolean;
-  user: User | null;
-  login: (user: User) => void;
+  user: UserEmail | null;
+  login: (user: UserEmail) => void;
   logout: () => void;
   setLoading: (loading: boolean) => void;
 }

@@ -9,3 +9,5 @@ Faker
 django-debug-toolbar
 ruff
 black
+pylint
+pylint-django

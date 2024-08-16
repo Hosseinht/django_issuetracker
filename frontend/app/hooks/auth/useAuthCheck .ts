@@ -1,12 +1,9 @@
 import { useEffect } from "react";
 import useAuthStore from "@/app/store";
 import AuthClient from "@/app/services/auth-client";
+import { UserEmail } from "@/app/entities/User";
 
-interface User {
-  email: string;
-}
-
-const authClient = new AuthClient<User>("/check/");
+const authClient = new AuthClient<UserEmail>("/check/");
 
 const useAuthCheck = () => {
   const { login, logout, setLoading } = useAuthStore();
@@ -26,9 +23,6 @@ const useAuthCheck = () => {
         console.error("Error checking authentication:", error);
         logout();
       } finally {
-        // This block runs whether the promise resolves or rejects
-        // However, we've already handled this in login and logout methods
-        // but for clarity or if you decide to change how login/logout work:
         setLoading(false);
       }
     })();

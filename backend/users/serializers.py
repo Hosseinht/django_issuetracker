@@ -21,6 +21,9 @@ class UserCreateSerializer(BaseUserCreateSerializer):
         fields = ["id", "email", "first_name", "last_name", "password", "re_password"]
 
 
+
+
+
 class UserSerializer(BaseUserSerializer):
     date_joined = serializers.DateTimeField(format="%a %b %d %Y")
 
