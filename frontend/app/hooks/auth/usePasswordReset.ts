@@ -9,7 +9,7 @@ const usePasswordReset = () => {
   const { mutate, isPending } = useMutation({
     mutationFn: (data: UserEmail) => authClient.post(data),
     onSuccess: () => {
-      toast.success("Please check email to reset your password");
+      toast.success("Request sent, check your email for reset link");
     },
     onError: () => {
       toast.error("An unexpected error occurred.");

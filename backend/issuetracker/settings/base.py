@@ -174,7 +174,8 @@ DJOSER = {
     "USER_CREATE_PASSWORD_RETYPE": True,
     "PASSWORD_RESET_CONFIRM_RETYPE": True,
     "TOKEN_MODEL": None,
-    "SOCIAL_AUTH_ALLOWED_REDIRECT_URIS": "http://localhost:3000/auth/google/",
+    "EMAIL_FRONTEND_DOMAIN": "127.0.0.1:3000/",
+    "SOCIAL_AUTH_ALLOWED_REDIRECT_URIS": "http://127.0.0.1:3000/auth/google/",
     "SERIALIZERS": {
         "user_create": "users.serializers.UserCreateSerializer",
         "current_user": "users.serializers.UserSerializer",

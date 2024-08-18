@@ -56,7 +56,7 @@ const LoginForm = () => {
         </Button>
 
         <Flex direction="column" gap="2" className="marginTop">
-          <Link href="/auth/forgot-password">Forgot password? </Link>
+          <Link href="/auth/password-reset">Forgot password? </Link>
           <Text>
             Don't have an account? <Link href="/auth/signup"> Register</Link>{" "}
           </Text>
