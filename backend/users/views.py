@@ -9,9 +9,12 @@ from rest_framework_simplejwt.views import (
     TokenRefreshView,
     TokenVerifyView,
 )
-from rest_framework.decorators import action
 
-from users.serializers import CustomActivationSerializer, CustomTokenRefreshSerializer, CustomTokenObtainPairSerializer
+from users.serializers import (
+    CustomActivationSerializer,
+    CustomTokenObtainPairSerializer,
+    CustomTokenRefreshSerializer,
+)
 
 
 class JWTSetCookieMixin:
@@ -23,10 +26,9 @@ class JWTSetCookieMixin:
                 settings.SIMPLE_JWT["REFRESH_TOKEN_NAME"],
                 response.data["refresh"],
                 max_age=settings.SIMPLE_JWT["REFRESH_TOKEN_LIFETIME"],
+                secure=settings.COOKIE_SECURE,
                 httponly=True,
                 samesite=settings.SIMPLE_JWT["JWT_COOKIE_SAMESITE"],
-               
-             
             )
 
         if response.data.get("access"):
@@ -34,12 +36,20 @@ class JWTSetCookieMixin:
                 settings.SIMPLE_JWT["َACCESS_TOKEN_NAME"],
                 response.data["access"],
                 max_age=settings.SIMPLE_JWT["ACCESS_TOKEN_LIFETIME"],
+                secure=settings.COOKIE_SECURE,
                 httponly=True,
                 samesite=settings.SIMPLE_JWT["JWT_COOKIE_SAMESITE"],
-                
-            
             )
             del response.data["access"]
+
+        response.set_cookie(
+            "logged_in",
+            "true",
+            max_age=settings.SIMPLE_JWT["ACCESS_TOKEN_LIFETIME"],
+            secure=settings.COOKIE_SECURE,
+            httponly=False,
+            samesite=settings.SIMPLE_JWT["JWT_COOKIE_SAMESITE"],
+        )
 
         return super().finalize_response(request, response, *args, **kwargs)
 
@@ -72,6 +82,7 @@ class LogoutView(APIView):
 
         response.delete_cookie("access_token")
         response.delete_cookie("refresh_token")
+        response.delete_cookie("logged_in")
 
         return response
 
@@ -89,15 +100,10 @@ class AuthCheckView(APIView):
 
         if user.is_authenticated:
             user_data = {
-                'email': user.email,
+                "email": user.email,
             }
-            response_data = {
-                'isAuthenticated': True,
-                'user': user_data
-            }
+            response_data = {"isAuthenticated": True, "user": user_data}
             return Response(response_data, status=status.HTTP_200_OK)
         else:
-            response_data = {
-                'isAuthenticated': False
-            }
+            response_data = {"isAuthenticated": False}
             return Response(response_data, status=status.HTTP_401_UNAUTHORIZED)

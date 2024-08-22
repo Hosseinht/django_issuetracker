@@ -9,29 +9,17 @@ https://docs.djangoproject.com/en/5.0/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.0/ref/settings/
 """
-import os
 from datetime import timedelta
 from pathlib import Path
 
-import environ
-
-env = environ.Env()
-
+from decouple import config
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
-environ.Env.read_env(os.path.join(BASE_DIR, ".env"))
+
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
-
-# SECURITY WARNING: keep the secret key used in production secret!
-
-
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
-
-ALLOWED_HOSTS = []
 
 
 # Application definition
@@ -166,6 +154,14 @@ SIMPLE_JWT = {
     "JWT_COOKIE_SAMESITE": "Lax",
 }
 
+
+COOKIE_NAME = "access"
+COOKIE_SAMESITE = "Lax"
+COOKIE_PATH = "/"
+COOKIE_HTTPONLY = True
+COOKIE_SECURE = config("COOKIE_SECURE", True)
+
+
 DJOSER = {
     "USER_ACTIVATION_TIMEOUT": timedelta(days=11),
     "PASSWORD_RESET_CONFIRM_URL": "auth/password-reset/{uid}/{token}",
@@ -191,8 +187,8 @@ AUTH_USER_MODEL = "users.User"
 
 APPEND_SLASH = False
 
-SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = env("GOOGLE_OAUTH2_KEY")
-SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = env("GOOGLE_AUTH_SECRET_KEY")
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = config("GOOGLE_OAUTH2_KEY")
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = config("GOOGLE_AUTH_SECRET_KEY")
 SOCIAL_AUTH_GOOGLE_OAUTH2_SCOPE = [
     "https://www.googleapis.com/auth/userinfo.email",
     "https://www.googleapis.com/auth/userinfo.profile",
@@ -204,8 +200,8 @@ EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
 EMAIL_HOST = "smtp.gmail.com"
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
-EMAIL_HOST_PASSWORD = env("EMAIL_HOST_PASSWORD")
-EMAIL_HOST_USER = env("EMAIL_HOST_USER")
+EMAIL_HOST_PASSWORD = config("EMAIL_HOST_PASSWORD")
+EMAIL_HOST_USER = config("EMAIL_HOST_USER")
 
-DOMAIN = env("DOMAIN")
+DOMAIN = config("DOMAIN")
 SITE_NAME = "Issue Tracker"

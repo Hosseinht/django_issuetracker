@@ -9,6 +9,8 @@ import { z } from "zod";
 import useLogin from "@/app/hooks/auth/useLogin";
 import { Spinner } from "@/app/components";
 
+import React, { useState } from "react";
+
 type LoginFormData = z.infer<typeof loginSchema>;
 const LoginForm = () => {
   const { mutate, error, errorData, isPending } = useLogin();
@@ -27,7 +29,7 @@ const LoginForm = () => {
 
   return (
     <Flex height="60vh" justify="center" align="center" direction="column">
-      <form className="space-y-3 " onSubmit={onSubmit}>
+      <form className="space-y-3 ">
         <Box mb="60px">
           <Heading mb="2" className="text-center">
             Log In
@@ -50,7 +52,7 @@ const LoginForm = () => {
         />
         <ErrorMessage>{errors.password?.message}</ErrorMessage>
 
-        <Button className="wide-button" disabled={isPending}>
+        <Button onClick={onSubmit} className="wide-button" disabled={isPending}>
           Log In
           {isPending && <Spinner />}
         </Button>

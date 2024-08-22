@@ -4,14 +4,13 @@ import {
   QueryClientProvider as ReactQueryClientProvider,
 } from "@tanstack/react-query";
 import { PropsWithChildren } from "react";
-import useAuthCheck from "@/app/hooks/auth/useAuthCheck ";
+import PersistAuth from "@/app/utils/PersistAuth";
 
 const queryClient = new QueryClient();
 const QueryClientProvider = ({ children }: PropsWithChildren) => {
-  useAuthCheck();
   return (
     <ReactQueryClientProvider client={queryClient}>
-      {children}
+      <PersistAuth /> {children}
     </ReactQueryClientProvider>
   );
 };
