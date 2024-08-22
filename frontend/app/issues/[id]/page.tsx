@@ -15,9 +15,9 @@ interface Props {
 const IssueDetailPage = ({ params }: Props) => {
   const id = parseInt(params.id);
 
-  const { data: issue, isLoading } = useIssue(id);
+  const { data: issue, isPending } = useIssue(id);
 
-  if (isLoading) return <LoadingIssueDetailPage />;
+  if (isPending) return <LoadingIssueDetailPage />;
 
   if (!issue) {
     notFound();
