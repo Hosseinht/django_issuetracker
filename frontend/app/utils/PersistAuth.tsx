@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import useAuthStore from "@/app/store";
 import AuthClient from "@/app/services/auth-client";
 import { UserEmail } from "@/app/entities/User";

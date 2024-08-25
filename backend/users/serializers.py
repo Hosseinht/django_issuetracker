@@ -8,10 +8,7 @@ from djoser.serializers import UserSerializer as BaseUserSerializer
 from rest_framework import serializers
 from rest_framework.exceptions import ValidationError
 from rest_framework_simplejwt.exceptions import InvalidToken
-from rest_framework_simplejwt.serializers import (
-    TokenObtainPairSerializer,
-    TokenRefreshSerializer,
-)
+from rest_framework_simplejwt.serializers import TokenRefreshSerializer
 
 User = get_user_model()
 
@@ -67,11 +64,11 @@ class CustomActivationSerializer(ActivationSerializer):
         return attrs
 
 
-class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
-    @classmethod
-    def get_token(cls, user):
-        token = super().get_token(user)
+# class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
+#     @classmethod
+#     def get_token(cls, user):
+#         token = super().get_token(user)
 
-        token["email"] = user.email
+#         token["email"] = user.email
 
-        return token
+#         return token

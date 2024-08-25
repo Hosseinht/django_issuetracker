@@ -7,8 +7,6 @@ import classnames from "classnames";
 import { Container, Flex } from "@radix-ui/themes";
 import UserProfileMenu from "@/app/components/UserProfileMenu";
 import useAuthStore from "@/app/store";
-import UserProfileMenuLoading from "@/New folder/UserProfileMenuLoading";
-import Spinner from "@/app/components/Spinner";
 
 const NavBar = () => {
   const isLoading = useAuthStore((s) => s.isLoading);

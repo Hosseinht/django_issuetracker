@@ -6,7 +6,7 @@ const SignupForm = dynamic(() => import("@/app/auth/_components/SignupForm"), {
   ssr: false,
   loading: () => <LoadingSignupPage />,
 });
-const Signup = () => {
+const SignupPage = () => {
   return (
     <div>
       <SignupForm />
@@ -14,4 +14,4 @@ const Signup = () => {
   );
 };
 
-export default Signup;
+export default SignupPage;

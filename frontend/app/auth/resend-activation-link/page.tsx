@@ -12,7 +12,7 @@ import Spinner from "../../components/Spinner";
 
 type EmailSchemaType = z.infer<typeof emailSchema>;
 
-const ResendActivationLink = () => {
+const ResendActivationLinkPage = () => {
   const [errorData, setErrorData] = useState(null);
 
   const {
@@ -68,4 +68,4 @@ const ResendActivationLink = () => {
   );
 };
 
-export default ResendActivationLink;
+export default ResendActivationLinkPage;

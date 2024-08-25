@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios, { AxiosRequestConfig } from "axios";
 
 const axiosInstance = axios.create({
   baseURL: "http://127.0.0.1:8000/auth",
@@ -18,6 +18,14 @@ class AuthClient<T> {
     });
     return res.data;
   };
+
+  oauth = (config: { params: T }) => {
+    return axiosInstance.post(this.endpoint, null, {
+      params: config.params,
+      withCredentials: true,
+    });
+  };
+
   get = async () => {
     const res = await axiosInstance.get(this.endpoint, {
       withCredentials: true,

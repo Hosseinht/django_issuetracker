@@ -10,9 +10,12 @@ import useLogin from "@/app/hooks/auth/useLogin";
 import { Spinner } from "@/app/components";
 
 import React, { useState } from "react";
+import { FaGoogle } from "react-icons/fa";
+import { useGoogle } from "@/app/utils";
 
 type LoginFormData = z.infer<typeof loginSchema>;
 const LoginForm = () => {
+  const [isLoading, setLoading] = useState(false);
   const { mutate, error, errorData, isPending } = useLogin();
 
   const {
@@ -22,6 +25,13 @@ const LoginForm = () => {
   } = useForm<LoginFormData>({
     resolver: zodResolver(loginSchema),
   });
+
+  const googleAuth = async (e: React.MouseEvent<HTMLElement>) => {
+    e.preventDefault();
+    setLoading(true);
+    await useGoogle();
+    setLoading(false);
+  };
 
   const onSubmit = handleSubmit((data: LoginFormData) => {
     mutate(data);
@@ -52,9 +62,20 @@ const LoginForm = () => {
         />
         <ErrorMessage>{errors.password?.message}</ErrorMessage>
 
-        <Button onClick={onSubmit} className="wide-button" disabled={isPending}>
+        <Button
+          onClick={onSubmit}
+          className="wide-button"
+          disabled={isPending}
+          loading={isPending}
+        >
           Log In
           {isPending && <Spinner />}
+        </Button>
+
+        <Button onClick={googleAuth} color="red" className="wide-button">
+          <FaGoogle />
+          Google
+          {isLoading && <Spinner />}
         </Button>
 
         <Flex direction="column" gap="2" className="marginTop">

@@ -15,7 +15,7 @@ interface Props {
   };
 }
 type PasswordResetSchemaType = z.infer<typeof passwordResetSchema>;
-const Page = ({ params }: Props) => {
+const PasswordResetConfirmPage = ({ params }: Props) => {
   const { uid, token } = params;
   const { mutate, isPending, error } = usePasswordResetConfirm();
   const {
@@ -64,4 +64,4 @@ const Page = ({ params }: Props) => {
   );
 };
 
-export default Page;
+export default PasswordResetConfirmPage;

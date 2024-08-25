@@ -8,7 +8,7 @@ class JWTCookieAuthentication(JWTAuthentication):
     def authenticate(self, request):
         try:
             header = self.get_header(request)
-            print(header)
+
             if header is None:
                 raw_token = request.COOKIES.get(
                     settings.SIMPLE_JWT["َACCESS_TOKEN_NAME"]

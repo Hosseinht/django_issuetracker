@@ -4,7 +4,7 @@ const LoginForm = dynamic(() => import("@/app/auth/_components/LoginForm"), {
   ssr: false,
   loading: () => <LoadingLoginPage />,
 });
-const Page = () => {
+const LoginPage = () => {
   return (
     <div>
       <LoginForm />
@@ -12,4 +12,4 @@ const Page = () => {
   );
 };
 
-export default Page;
+export default LoginPage;

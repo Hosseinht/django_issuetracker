@@ -9,7 +9,7 @@ const LoadingLoginPage = () => {
       direction="column"
       justify="center"
       mx="auto"
-      height="50vh"
+      height="60vh"
       className="max-w-md"
     >
       <Box mb="40px" className="text-center">
@@ -17,6 +17,7 @@ const LoadingLoginPage = () => {
         <Skeleton />
       </Box>
 
+      <Skeleton height="2rem" />
       <Skeleton height="2rem" />
       <Skeleton height="2rem" />
       <Skeleton height="2rem" />

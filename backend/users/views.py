@@ -10,11 +10,7 @@ from rest_framework_simplejwt.views import (
     TokenVerifyView,
 )
 
-from users.serializers import (
-    CustomActivationSerializer,
-    CustomTokenObtainPairSerializer,
-    CustomTokenRefreshSerializer,
-)
+from users.serializers import CustomActivationSerializer, CustomTokenRefreshSerializer
 
 
 class JWTSetCookieMixin:
@@ -55,7 +51,7 @@ class JWTSetCookieMixin:
 
 
 class JWTCookieTokenObtainPairView(JWTSetCookieMixin, TokenObtainPairView):
-    serializer_class = CustomTokenObtainPairSerializer
+    pass
 
 
 class JWTCookieTokenRefreshView(JWTSetCookieMixin, TokenRefreshView):
@@ -70,10 +66,52 @@ class JWTCookieTokenVerifyView(TokenVerifyView):
         return super().post(request, *args, **kwargs)
 
 
-class JWTProviderAuthView(JWTSetCookieMixin, ProviderAuthView):
-    """View for social authentication with JWT token set as a cookie."""
+class JWTProviderAuthView(ProviderAuthView):
+    """
+     View for social authentication with JWT tokens set as cookies.
 
-    pass
+    Why didn't I use `JWTSetCookieMixin` here? Because if I used the mixin,
+    the `logged_in` cookie would be created even if authentication fails.
+
+    Why didn't I create a function to use across all relevant views? No reason! :)
+
+    """
+
+    def post(self, request, *args, **kwargs):
+        response = super().post(request, *args, **kwargs)
+
+        if response.status_code == 201:
+            access_token = response.data.get("access")
+            refresh_token = response.data.get("refresh")
+
+            response.set_cookie(
+                settings.SIMPLE_JWT["REFRESH_TOKEN_NAME"],
+                refresh_token,
+                max_age=settings.SIMPLE_JWT["REFRESH_TOKEN_LIFETIME"],
+                secure=settings.COOKIE_SECURE,
+                httponly=True,
+                samesite=settings.SIMPLE_JWT["JWT_COOKIE_SAMESITE"],
+            )
+
+            response.set_cookie(
+                settings.SIMPLE_JWT["َACCESS_TOKEN_NAME"],
+                access_token,
+                max_age=settings.SIMPLE_JWT["ACCESS_TOKEN_LIFETIME"],
+                secure=settings.COOKIE_SECURE,
+                httponly=True,
+                samesite=settings.SIMPLE_JWT["JWT_COOKIE_SAMESITE"],
+            )
+            del response.data["access"]
+
+            response.set_cookie(
+                "logged_in",
+                "true",
+                max_age=settings.SIMPLE_JWT["ACCESS_TOKEN_LIFETIME"],
+                secure=settings.COOKIE_SECURE,
+                httponly=False,
+                samesite=settings.SIMPLE_JWT["JWT_COOKIE_SAMESITE"],
+            )
+        return response
 
 
 class LogoutView(APIView):

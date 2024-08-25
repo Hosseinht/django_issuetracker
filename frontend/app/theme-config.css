@@ -1,3 +1,6 @@
 .radix-themes {
     --default-font-family: var(--font-inter) !important;
+
+    --cursor-button: pointer !important;
+
 }
