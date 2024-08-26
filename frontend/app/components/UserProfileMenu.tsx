@@ -4,7 +4,7 @@ import useLogout from "@/app/hooks/auth/useLogout";
 import useAuthStore from "@/app/store";
 
 const UserProfileMenu = () => {
-  const { user, logout, isLoading } = useAuthStore();
+  const { user, logout, isAuthenticated } = useAuthStore();
 
   const { mutate, isPending } = useLogout();
 
@@ -28,7 +28,7 @@ const UserProfileMenu = () => {
         </DropdownMenu.Trigger>
 
         <DropdownMenu.Content className="text-center">
-          {user ? (
+          {isAuthenticated && user ? (
             <Box>
               <DropdownMenu.Label>
                 <Text size="2">{user?.email}</Text>

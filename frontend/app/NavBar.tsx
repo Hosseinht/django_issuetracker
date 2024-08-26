@@ -9,7 +9,6 @@ import UserProfileMenu from "@/app/components/UserProfileMenu";
 import useAuthStore from "@/app/store";
 
 const NavBar = () => {
-  const isLoading = useAuthStore((s) => s.isLoading);
   const currentPath = usePathname();
   const links = [
     { label: "Dashboard", href: "/" },

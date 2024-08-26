@@ -2,7 +2,7 @@ import axios from "axios";
 
 // Create an instance of axios with a base URL and credentials configuration.
 const axiosInstance = axios.create({
-  baseURL: "http://127.0.0.1:8000/api", // Base URL for all requests made with this instance.
+  baseURL: "http://localhost:8000/api", // Base URL for all requests made with this instance.
   // withCredentials: true, // Include credentials (like cookies) in cross-site requests.
 });
 

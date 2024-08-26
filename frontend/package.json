@@ -3,11 +3,12 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev --hostname 127.0.0.1",
+    "dev": "next dev",
     "build": "next build",
     "start": "next start",
     "lint": "next lint"
   },
+
   "dependencies": {
     "@hookform/resolvers": "^3.3.1",
     "@prisma/client": "^5.3.1",
@@ -49,3 +50,4 @@
     "@tailwindcss/typography": "^0.5.13"
   }
 }
+

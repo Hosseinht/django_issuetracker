@@ -7,12 +7,14 @@ import LoadingIssueDetailPage from "@/app/issues/[id]/loading";
 import EditIssueButton from "@/app/issues/[id]/EditIssueButton";
 import IssueDetails from "@/app/issues/[id]/IssueDetails";
 import DeleteIssueButton from "@/app/issues/[id]/DeleteIssueButton";
+import useAuthStore from "@/app/store";
 
 interface Props {
   params: { id: string };
 }
 
 const IssueDetailPage = ({ params }: Props) => {
+  const isAuthenticated = useAuthStore((s) => s.isAuthenticated);
   const id = parseInt(params.id);
 
   const { data: issue, isPending } = useIssue(id);
@@ -28,13 +30,14 @@ const IssueDetailPage = ({ params }: Props) => {
       <Box className="md:col-span-4">
         <IssueDetails issue={issue} />
       </Box>
-
-      <Box mt="4">
-        <Flex direction="column" gap="4">
-          <EditIssueButton issueId={issue.id} />
-          <DeleteIssueButton issueId={issue.id} />
-        </Flex>
-      </Box>
+      {isAuthenticated && (
+        <Box mt="4">
+          <Flex direction="column" gap="4">
+            <EditIssueButton issueId={issue.id} />
+            <DeleteIssueButton issueId={issue.id} />
+          </Flex>
+        </Box>
+      )}
     </Grid>
   );
 };

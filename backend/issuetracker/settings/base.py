@@ -63,13 +63,13 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = "issuetracker.urls"
 
-INTERNAL_IPS = [
-    "127.0.0.1",
-]
+INTERNAL_IPS = ["127.0.0.1", "localhost"]
 
 CORS_ALLOWED_ORIGINS = [
     "http://127.0.0.1:8000",
+    "http://localhost:8000",
     "http://127.0.0.1:3000",
+    "http://localhost:3000",
 ]
 CORS_ALLOW_CREDENTIALS = True
 
@@ -149,15 +149,11 @@ SIMPLE_JWT = {
     "AUTH_HEADER_TYPES": ("JWT",),
     "ACCESS_TOKEN_LIFETIME": timedelta(days=60),
     "REFRESH_TOKEN_LIFETIME": timedelta(days=60),
-    "َACCESS_TOKEN_NAME": "access_token",
-    "REFRESH_TOKEN_NAME": "refresh_token",
+    "َACCESS_TOKEN_NAME": "access",
+    "REFRESH_TOKEN_NAME": "refresh",
     "JWT_COOKIE_SAMESITE": "Lax",
 }
 
-
-COOKIE_NAME = "access"
-COOKIE_SAMESITE = "Lax"
-COOKIE_PATH = "/"
 COOKIE_HTTPONLY = True
 COOKIE_SECURE = config("COOKIE_SECURE", True)
 
@@ -170,8 +166,8 @@ DJOSER = {
     "USER_CREATE_PASSWORD_RETYPE": True,
     "PASSWORD_RESET_CONFIRM_RETYPE": True,
     "TOKEN_MODEL": None,
-    "EMAIL_FRONTEND_DOMAIN": "127.0.0.1:3000/",
-    "SOCIAL_AUTH_ALLOWED_REDIRECT_URIS": "http://127.0.0.1:3000/auth/google/",
+    "EMAIL_FRONTEND_DOMAIN": "localhost:3000/",
+    "SOCIAL_AUTH_ALLOWED_REDIRECT_URIS": "http://localhost:3000/auth/google/",
     "SERIALIZERS": {
         "user_create": "users.serializers.UserCreateSerializer",
         "current_user": "users.serializers.UserSerializer",
