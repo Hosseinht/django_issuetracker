@@ -8,6 +8,7 @@ import EditIssueButton from "@/app/issues/[id]/EditIssueButton";
 import IssueDetails from "@/app/issues/[id]/IssueDetails";
 import DeleteIssueButton from "@/app/issues/[id]/DeleteIssueButton";
 import useAuthStore from "@/app/store";
+import AssigneeSelect from "@/app/issues/[id]/AssigneeSelect";
 
 interface Props {
   params: { id: string };
@@ -33,6 +34,7 @@ const IssueDetailPage = ({ params }: Props) => {
       {isAuthenticated && (
         <Box mt="4">
           <Flex direction="column" gap="4">
+            <AssigneeSelect />
             <EditIssueButton issueId={issue.id} />
             <DeleteIssueButton issueId={issue.id} />
           </Flex>
