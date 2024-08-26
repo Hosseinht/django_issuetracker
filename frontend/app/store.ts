@@ -1,5 +1,6 @@
 import { create } from "zustand";
 import { UserEmail } from "@/app/entities/User";
+import { mountStoreDevtool } from "simple-zustand-devtools";
 
 interface AuthStore {
   isAuthenticated: boolean;
@@ -18,5 +19,9 @@ const useAuthStore = create<AuthStore>((set) => ({
   login: (user) => set((state) => ({ isAuthenticated: true, user })),
   logout: () => set(() => ({ isAuthenticated: false, user: null })),
 }));
+
+if (process.env.NODE_ENV === "development") {
+  mountStoreDevtool("Auth Store", useAuthStore);
+}
 
 export default useAuthStore;
