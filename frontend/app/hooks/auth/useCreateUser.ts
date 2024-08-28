@@ -1,4 +1,4 @@
-import AuthClient from "@/app/services/auth-client";
+import AuthClient from "@/app/services/authClient";
 import { useMutation } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";

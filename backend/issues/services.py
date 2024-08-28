@@ -1,6 +1,8 @@
-from django.shortcuts import get_object_or_404
+from django.contrib.auth import get_user_model
 
 from .models import Issue
+
+User = get_user_model()
 
 
 def create_issue(*, title: str, description: str):
@@ -8,6 +10,11 @@ def create_issue(*, title: str, description: str):
 
 
 def update_issue(issue, **kwargs):
+    # if "user" in kwargs:
+    #     user_id = kwargs["user"]
+    #     user = User.objects.get(email=user_id)
+    #     kwargs["user"] = user  # Now kwargs['user'] is a User instance
+
     for key, value in kwargs.items():
         setattr(issue, key, value)
     issue.save()

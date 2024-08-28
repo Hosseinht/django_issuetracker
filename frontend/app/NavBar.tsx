@@ -6,7 +6,6 @@ import { usePathname } from "next/navigation";
 import classnames from "classnames";
 import { Container, Flex } from "@radix-ui/themes";
 import UserProfileMenu from "@/app/components/UserProfileMenu";
-import useAuthStore from "@/app/store";
 
 const NavBar = () => {
   const currentPath = usePathname();

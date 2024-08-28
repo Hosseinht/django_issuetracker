@@ -1,12 +1,11 @@
 "use client";
 import { useEffect } from "react";
 import useAuthStore from "@/app/store";
-import AuthClient from "@/app/services/auth-client";
-import { UserEmail } from "@/app/entities/User";
+import AuthClient from "@/app/services/authClient";
 import { getCookie } from "cookies-next";
 import { AxiosError } from "axios";
+import userService from "@/app/services/userService";
 
-const checkUserClient = new AuthClient<UserEmail>("/check/");
 const refreshTokenClient = new AuthClient<string>("/jwt/refresh/");
 
 // PersistAuth component: Checks and maintains user authentication state
@@ -22,7 +21,7 @@ const PersistAuth = () => {
 
   const checkAuth = async () => {
     try {
-      const response = await checkUserClient.get();
+      const response = await userService.get();
       if (response.isAuthenticated) {
         login(response.user);
       } else {

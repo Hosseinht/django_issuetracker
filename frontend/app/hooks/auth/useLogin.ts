@@ -1,11 +1,12 @@
-import AuthClient from "@/app/services/auth-client";
+import AuthClient from "@/app/services/authClient";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { AxiosError } from "axios";
 import { useState } from "react";
 import { toast } from "react-toastify";
 import { useRouter } from "next/navigation";
 import useAuthStore from "@/app/store";
-import { UserEmail } from "@/app/entities/User";
+import userService from "@/app/services/userService";
+import { CACHE_KEY_USER } from "@/app/hooks/constatnt";
 
 interface LoginUser {
   email: string;
@@ -13,7 +14,6 @@ interface LoginUser {
 }
 
 const authClient = new AuthClient<LoginUser>("/jwt/create/");
-const checkUserClient = new AuthClient<UserEmail>("/check/");
 
 const useLogin = () => {
   const login = useAuthStore((s) => s.login);
@@ -27,13 +27,13 @@ const useLogin = () => {
     onSuccess: async () => {
       toast.success("Logged in");
 
-      const response = await checkUserClient.get();
+      const response = await userService.get();
       if (response.isAuthenticated) {
         login(response.user);
       } else {
         logout();
       }
-      await client.invalidateQueries({ queryKey: ["user"] });
+      await client.invalidateQueries({ queryKey: CACHE_KEY_USER });
 
       router.push("/issues");
     },

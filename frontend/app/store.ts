@@ -1,12 +1,12 @@
 import { create } from "zustand";
-import { UserEmail } from "@/app/entities/User";
+import { User } from "@/app/entities/User";
 import { mountStoreDevtool } from "simple-zustand-devtools";
 
 interface AuthStore {
   isAuthenticated: boolean;
   isLoading: boolean;
-  user: UserEmail | null;
-  login: (user: UserEmail) => void;
+  user: User | null;
+  login: (user: User) => void;
   logout: () => void;
   setLoading: (loading: boolean) => void;
 }
@@ -16,7 +16,7 @@ const useAuthStore = create<AuthStore>((set) => ({
   isLoading: false,
   user: null,
   setLoading: (loading) => set({ isLoading: loading }),
-  login: (user) => set((state) => ({ isAuthenticated: true, user })),
+  login: (user) => set(() => ({ isAuthenticated: true, user })),
   logout: () => set(() => ({ isAuthenticated: false, user: null })),
 }));
 

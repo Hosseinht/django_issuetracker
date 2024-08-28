@@ -1,6 +1,6 @@
 from django.shortcuts import get_object_or_404
 from rest_framework import status
-from rest_framework.generics import CreateAPIView
+from rest_framework.renderers import BrowsableAPIRenderer, JSONRenderer
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
@@ -9,6 +9,7 @@ from issues.serializers import (
     IssueDetailSerializer,
     IssueInputSerializer,
     IssueOutPutSerializer,
+    IssueUpdateSerializer,
 )
 from issues.services import create_issue, update_issue
 
@@ -43,18 +44,21 @@ class IssueListView(APIView):
 
 
 class IssueDetailView(APIView):
-    def get(self, request, pk):
+    renderer_classes = [BrowsableAPIRenderer, JSONRenderer]
+
+    def get(self, request, pk, format=None):
         issue = get_object_or_404(Issue, id=pk)
         serializer = IssueDetailSerializer(issue)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
-    def patch(self, request, pk):
+    def patch(self, request, pk, format=None):
         issue = get_object_or_404(Issue, id=pk)
-        serializer = IssueDetailSerializer(
+        serializer = IssueUpdateSerializer(
             instance=issue, data=request.data, partial=True
         )
         serializer.is_valid(raise_exception=True)
         validated_data = serializer.validated_data
+        print(validated_data)
         issue = update_issue(issue, **validated_data)
 
         serializer = IssueOutPutSerializer(issue)
@@ -63,4 +67,5 @@ class IssueDetailView(APIView):
     def delete(self, request, pk):
         issue = get_object_or_404(Issue, id=pk)
         issue.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
         return Response(status=status.HTTP_204_NO_CONTENT)

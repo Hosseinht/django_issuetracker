@@ -7,7 +7,7 @@ const axiosInstance = axios.create({
 });
 
 // Define a generic API client class for making HTTP requests.
-class APIClient<T> {
+class ApiClient<T> {
   endpoint: string; // Property to store the endpoint for this client.
 
   // Constructor to initialize the endpoint property.
@@ -18,7 +18,7 @@ class APIClient<T> {
   // Method to fetch all resources from the specified endpoint.
   getAll = async () => {
     // Make a GET request to the endpoint, optionally with additional config.
-    const res = await axiosInstance.get<T>(this.endpoint);
+    const res = await axiosInstance.get<T[]>(this.endpoint);
     return res.data;
     // Return the data from the response.
   };
@@ -32,6 +32,7 @@ class APIClient<T> {
     const res = await axiosInstance.post<T>(this.endpoint, data);
     return res.data;
   };
+
   update = async (id: number, data: T) => {
     const res = await axiosInstance.patch<T>(
       this.endpoint + "/" + id + "/",
@@ -39,10 +40,11 @@ class APIClient<T> {
     );
     return res.data;
   };
+
   delete = async (id: number) => {
-    const res = await axiosInstance.delete(this.endpoint + "/" + id + "/");
+    const res = await axiosInstance.delete<T>(this.endpoint + "/" + id + "/");
     return res.data;
   };
 }
 
-export default APIClient;
+export default ApiClient;

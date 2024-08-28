@@ -1,7 +1,10 @@
+from django.contrib.auth import get_user_model
 from django.db import models
 from django.utils import timezone
 
 # Create your models here.
+
+User = get_user_model()
 
 
 class Issue(models.Model):
@@ -10,6 +13,7 @@ class Issue(models.Model):
         IN_PROGRESS = "IN_PROGRESS"
         CLOSED = "CLOSED"
 
+    user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
     title = models.CharField(max_length=255)
     description = models.TextField()
     status = models.CharField(

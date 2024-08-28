@@ -159,6 +159,7 @@ COOKIE_SECURE = config("COOKIE_SECURE", True)
 
 
 DJOSER = {
+    "HIDE_USERS": False,
     "USER_ACTIVATION_TIMEOUT": timedelta(days=11),
     "PASSWORD_RESET_CONFIRM_URL": "auth/password-reset/{uid}/{token}",
     "SEND_ACTIVATION_EMAIL": True,
@@ -172,6 +173,9 @@ DJOSER = {
         "user_create": "users.serializers.UserCreateSerializer",
         "current_user": "users.serializers.UserSerializer",
     },
+    # "PERMISSIONS": {
+    #     "user_list": ["rest_framework.permissions.IsAuthenticated"],
+    # },
 }
 
 AUTHENTICATION_BACKENDS = (

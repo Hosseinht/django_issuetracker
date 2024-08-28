@@ -6,7 +6,7 @@ import useAuthStore from "@/app/store";
 const UserProfileMenu = () => {
   const { user, logout, isAuthenticated } = useAuthStore();
 
-  const { mutate, isPending } = useLogout();
+  const { mutate } = useLogout();
 
   const onLogout = () => {
     logout();

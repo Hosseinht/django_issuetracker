@@ -1,13 +1,14 @@
-import APIClient from "@/app/services/api-client";
+import ApiClient from "@/app/services/apiClient";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { CACHE_KEY_ISSUES } from "@/app/hooks/constatnt";
 
 interface CreateIssue {
   title: string;
   description: string;
 }
-const apiClient = new APIClient<CreateIssue>("/issue/create/");
+const apiClient = new ApiClient<CreateIssue>("/issue/create/");
 const useCreateIssue = () => {
   const client = useQueryClient();
   const router = useRouter();
@@ -17,7 +18,7 @@ const useCreateIssue = () => {
     mutationFn: (data: CreateIssue) => apiClient.post(data),
     onSuccess: async () => {
       router.push("/issues");
-      await client.invalidateQueries({ queryKey: ["issues"] });
+      await client.invalidateQueries({ queryKey: CACHE_KEY_ISSUES });
     },
     onError: () => {
       setError("An unexpected error occurred.");

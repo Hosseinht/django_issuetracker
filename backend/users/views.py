@@ -118,8 +118,8 @@ class LogoutView(APIView):
     def post(self, request, *args, **kwargs):
         response = Response(status=status.HTTP_204_NO_CONTENT)
 
-        response.delete_cookie("access_token")
-        response.delete_cookie("refresh_token")
+        response.delete_cookie("access")
+        response.delete_cookie("refresh")
         response.delete_cookie("logged_in")
 
         return response

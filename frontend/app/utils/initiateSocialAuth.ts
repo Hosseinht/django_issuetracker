@@ -26,3 +26,25 @@ export default async function initiateSocialAuth(
     toast.error("Something went wrong");
   }
 }
+
+// Google OAuth Authentication Flow
+// 1. User Initiates Login:
+//     The user clicks the Google login button in the LoginForm component.
+//     This calls useGoogle(), which internally uses initiateSocialAuth to start the OAuth process with Google.
+//
+// 2. OAuth Process Begins:
+//     initiateSocialAuth constructs a URL to the backend (Django) for OAuth with Google.
+//     The browser is redirected to Google for user consent.
+//
+// 3. User Consents and Redirects Back:
+//     After Google authentication, the user is redirected back to your frontend at /auth/google with state and code parameters.
+//
+// 4. Frontend Handles Redirect:
+//     GoogleAuthPage captures these parameters and uses useSocialAuth hook.
+//     useSocialAuth identifies the provider (Google) and calls useGoogleAuth.
+//
+// 5. Final Authentication:
+//     useGoogleAuth:
+//          Sends the state and code to your backend using AuthClient.
+//          If successful, it logs in the user, fetches user details, and redirects to /issues.
+//          If failed, it shows an error and redirects to the login page.

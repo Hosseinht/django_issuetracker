@@ -1,6 +1,6 @@
 "use client";
 import { Box, Button, Flex, Heading, Text, TextField } from "@radix-ui/themes";
-import ErrorMessage from "../../components/ErrorMessage";
+import { ErrorMessage } from "../../components";
 import Link from "../../components/Link";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -72,7 +72,12 @@ const LoginForm = () => {
           {isPending && <Spinner />}
         </Button>
 
-        <Button onClick={googleAuth} color="red" className="wide-button">
+        <Button
+          onClick={googleAuth}
+          disabled={isLoading}
+          color="red"
+          className="wide-button"
+        >
           <FaGoogle />
           Google
           {isLoading && <Spinner />}

@@ -1,12 +1,13 @@
-import AuthClient from "@/app/services/auth-client";
+import AuthClient from "@/app/services/authClient";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "react-toastify";
 import { useRouter } from "next/navigation";
-import { UserEmail } from "@/app/entities/User";
+import userService from "@/app/services/userService";
 import useAuthStore from "@/app/store";
+import { CACHE_KEY_USER } from "@/app/hooks/constatnt";
 
 const authClient = new AuthClient("/o/google-oauth2/");
-const checkUserClient = new AuthClient<UserEmail>("/check/");
+
 const useGoogleAuth = () => {
   const login = useAuthStore((s) => s.login);
   const logout = useAuthStore((s) => s.logout);
@@ -18,13 +19,13 @@ const useGoogleAuth = () => {
       authClient.oauth({ params: data }),
     onSuccess: async () => {
       toast.success("You are logged in");
-      const response = await checkUserClient.get();
+      const response = await userService.get();
       if (response.isAuthenticated) {
         login(response.user);
       } else {
         logout();
       }
-      await client.invalidateQueries({ queryKey: ["user"] });
+      await client.invalidateQueries({ queryKey: CACHE_KEY_USER });
       router.push("/issues");
     },
     onError: () => {

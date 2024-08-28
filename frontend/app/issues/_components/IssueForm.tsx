@@ -18,11 +18,13 @@ type IssueFormData = z.infer<typeof issueSchema>;
 
 const IssueForm = ({ issue }: { issue?: Issue }) => {
   const id = issue?.id;
+
   const {
     createIssue,
     error: createError,
     isPending: createIssuePending,
   } = useCreateIssue();
+
   const {
     updateIssue,
     error: updateError,
@@ -46,6 +48,7 @@ const IssueForm = ({ issue }: { issue?: Issue }) => {
   const onSubmit = handleSubmit((data: IssueFormData) => {
     if (issue) {
       updateIssue(data);
+      console.log(" is", data);
     } else {
       createIssue(data);
     }

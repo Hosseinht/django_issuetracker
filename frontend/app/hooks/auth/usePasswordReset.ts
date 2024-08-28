@@ -1,13 +1,13 @@
-import AuthClient from "@/app/services/auth-client";
+import AuthClient from "@/app/services/authClient";
 import { useMutation } from "@tanstack/react-query";
-import { UserEmail } from "@/app/entities/User";
+import { User } from "@/app/entities/User";
 import { toast } from "react-toastify";
 
-const authClient = new AuthClient<UserEmail>("/users/reset_password/");
+const authClient = new AuthClient<User>("/users/reset_password/");
 
 const usePasswordReset = () => {
   const { mutate, isPending } = useMutation({
-    mutationFn: (data: UserEmail) => authClient.post(data),
+    mutationFn: (data: User) => authClient.post(data),
     onSuccess: () => {
       toast.success("Request sent, check your email for reset link");
     },
