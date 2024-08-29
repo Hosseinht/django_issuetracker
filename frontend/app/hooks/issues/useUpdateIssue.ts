@@ -22,12 +22,11 @@ const useUpdateIssue = (id: number) => {
     mutationFn: (data: UpdateIssue) => apiClient.update(id, data),
 
     onSuccess: async (data) => {
-      console.log(data);
       router.push(`/issues/${id}/`);
       await client.invalidateQueries({ queryKey: ["issue", id] });
       await client.invalidateQueries({ queryKey: ["issues"] });
     },
-    onError: () => {
+    onError: (error) => {
       setError("An unexpected error occurred");
     },
   });

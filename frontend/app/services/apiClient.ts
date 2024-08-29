@@ -1,5 +1,11 @@
-import axios from "axios";
+import axios, { AxiosRequestConfig } from "axios";
 
+export interface FetchResponse<T> {
+  count: number;
+  next: string | null;
+  previous: string | null;
+  results: T[];
+}
 // Create an instance of axios with a base URL and credentials configuration.
 const axiosInstance = axios.create({
   baseURL: "http://localhost:8000/api", // Base URL for all requests made with this instance.
@@ -16,11 +22,12 @@ class ApiClient<T> {
   }
 
   // Method to fetch all resources from the specified endpoint.
-  getAll = async () => {
-    // Make a GET request to the endpoint, optionally with additional config.
-    const res = await axiosInstance.get<T[]>(this.endpoint);
+  getAll = async (config: AxiosRequestConfig = {}) => {
+    const res = await axiosInstance.get<FetchResponse<T>>(
+      this.endpoint,
+      config,
+    );
     return res.data;
-    // Return the data from the response.
   };
 
   getOne = async (id: number) => {

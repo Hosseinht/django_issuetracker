@@ -1,6 +1,6 @@
 from django.shortcuts import get_object_or_404
 from rest_framework import status
-from rest_framework.renderers import BrowsableAPIRenderer, JSONRenderer
+from rest_framework.generics import ListAPIView
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
@@ -36,16 +36,12 @@ class IssueCreateView(APIView):
         )
 
 
-class IssueListView(APIView):
-    def get(self, request):
-        issues = Issue.objects.all()
-        serializer = IssueOutPutSerializer(issues, many=True)
-        return Response(serializer.data, status=status.HTTP_200_OK)
+class IssueListView(ListAPIView):
+    queryset = Issue.objects.all()
+    serializer_class = IssueOutPutSerializer
 
 
 class IssueDetailView(APIView):
-    renderer_classes = [BrowsableAPIRenderer, JSONRenderer]
-
     def get(self, request, pk, format=None):
         issue = get_object_or_404(Issue, id=pk)
         serializer = IssueDetailSerializer(issue)
@@ -67,5 +63,4 @@ class IssueDetailView(APIView):
     def delete(self, request, pk):
         issue = get_object_or_404(Issue, id=pk)
         issue.delete()
-        return Response(status=status.HTTP_204_NO_CONTENT)
         return Response(status=status.HTTP_204_NO_CONTENT)

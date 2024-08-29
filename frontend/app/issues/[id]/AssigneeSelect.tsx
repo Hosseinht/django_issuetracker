@@ -4,14 +4,17 @@ import useFetchUsers from "@/app/hooks/auth/useFetchUsers";
 import Skeleton from "@/app/components/Skeleton";
 import useUpdateIssue from "@/app/hooks/issues/useUpdateIssue";
 import { Issue } from "@/app/entities/Issue";
+import { toast } from "react-toastify";
 
 const AssigneeSelect = ({ issue }: { issue: Issue }) => {
   const { data: users, isPending, error } = useFetchUsers();
   const { updateIssue } = useUpdateIssue(issue.id);
 
   if (isPending) return <Skeleton height="2rem" />;
-  if (error) return null;
 
+  if (error) {
+    toast.error("Changes could not be saved");
+  }
   const handleValueChange = (user: null | string) => {
     if (user === "unassigned") {
       const user = null;

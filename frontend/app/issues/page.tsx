@@ -5,9 +5,12 @@ import useIssues from "@/app/hooks/issues/useIssues";
 import LoadingIssuesPage from "@/app/issues/loading";
 import IssueActions from "@/app/issues/IssueActions";
 import { IssueStatusBadge, Link } from "@/app/components";
+import { useState } from "react";
+import Pagination from "@/app/components/Pagination";
 
 const IssuesPage = () => {
-  const { data: issues, isLoading } = useIssues();
+  const [page, setPage] = useState<number>(1);
+  const { data: issues, isLoading } = useIssues(page);
 
   if (isLoading)
     return (
@@ -19,7 +22,7 @@ const IssuesPage = () => {
   return (
     <div>
       <IssueActions />
-
+      <span onClick={() => setPage(page + 1)}>next</span>
       <Table.Root variant="surface">
         <Table.Header>
           <Table.Row>
@@ -33,7 +36,7 @@ const IssuesPage = () => {
           </Table.Row>
         </Table.Header>
         <Table.Body>
-          {issues?.map((issue) => (
+          {issues?.results?.map((issue) => (
             <Table.Row key={issue.id}>
               <Table.Cell>
                 <Link href={`/issues/${issue.id}`}>{issue.title}</Link>
@@ -51,6 +54,14 @@ const IssuesPage = () => {
           ))}
         </Table.Body>
       </Table.Root>
+      {issues && (
+        <Pagination
+          itemCount={issues.count}
+          pageSize={3}
+          currentPage={page}
+          setPage={setPage}
+        />
+      )}
     </div>
   );
 };
