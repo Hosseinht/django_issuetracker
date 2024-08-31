@@ -26,6 +26,7 @@ const IssuesPage = ({ searchParams }: Props) => {
       value: "created_at",
       className: "hidden md:table-cell",
     },
+    { label: "Assigned To", value: "user", className: "hidden md:table-cell" },
   ];
 
   const status = statuses.includes(searchParams.status)
@@ -63,7 +64,10 @@ const IssuesPage = ({ searchParams }: Props) => {
         <Table.Header>
           <Table.Row>
             {columns.map((column) => (
-              <Table.ColumnHeaderCell key={column.value}>
+              <Table.ColumnHeaderCell
+                key={column.value}
+                className={column.className}
+              >
                 <NextLink
                   href={{
                     query: {
@@ -98,6 +102,10 @@ const IssuesPage = ({ searchParams }: Props) => {
               </Table.Cell>
               <Table.Cell className="hidden md:table-cell">
                 {issue.created_at}
+              </Table.Cell>
+              <Table.Cell className="hidden md:table-cell">
+                {/*@ts-ignore*/}
+                {issue.user ? issue.user : "Unassigned"}
               </Table.Cell>
             </Table.Row>
           ))}
