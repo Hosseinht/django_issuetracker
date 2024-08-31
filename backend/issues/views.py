@@ -1,9 +1,12 @@
 from django.shortcuts import get_object_or_404
+from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import status
+from rest_framework.filters import SearchFilter
 from rest_framework.generics import ListAPIView
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
+from issues.filters import StatusFilter
 from issues.models import Issue
 from issues.serializers import (
     IssueDetailSerializer,
@@ -11,7 +14,8 @@ from issues.serializers import (
     IssueOutPutSerializer,
     IssueUpdateSerializer,
 )
-from issues.services import create_issue, update_issue
+
+from .services import create_issue, update_issue
 
 
 class IssueCreateView(APIView):
@@ -37,8 +41,12 @@ class IssueCreateView(APIView):
 
 
 class IssueListView(ListAPIView):
-    queryset = Issue.objects.all()
+    queryset = Issue.objects.select_related("user").all()
     serializer_class = IssueOutPutSerializer
+    filter_backends = [DjangoFilterBackend, SearchFilter]
+    filterset_class = StatusFilter
+    search_fields = ["status"]
+    ordering_fields = ["status"]
 
 
 class IssueDetailView(APIView):
@@ -63,4 +71,5 @@ class IssueDetailView(APIView):
     def delete(self, request, pk):
         issue = get_object_or_404(Issue, id=pk)
         issue.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
         return Response(status=status.HTTP_204_NO_CONTENT)

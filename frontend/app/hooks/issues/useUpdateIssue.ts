@@ -2,7 +2,6 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import ApiClient from "@/app/services/apiClient";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import { User } from "@/app/entities/User";
 
 export interface UpdateIssue {
   user?: null | string;
@@ -21,12 +20,12 @@ const useUpdateIssue = (id: number) => {
   const { mutate, isPending } = useMutation({
     mutationFn: (data: UpdateIssue) => apiClient.update(id, data),
 
-    onSuccess: async (data) => {
+    onSuccess: async () => {
       router.push(`/issues/${id}/`);
       await client.invalidateQueries({ queryKey: ["issue", id] });
       await client.invalidateQueries({ queryKey: ["issues"] });
     },
-    onError: (error) => {
+    onError: () => {
       setError("An unexpected error occurred");
     },
   });

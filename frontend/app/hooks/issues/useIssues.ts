@@ -1,17 +1,16 @@
-import ApiClient, { FetchResponse } from "@/app/services/apiClient";
+import ApiClient from "@/app/services/apiClient";
 import { useQuery } from "@tanstack/react-query";
-import { Issue } from "@/app/entities/Issue";
+import { Issue, Status } from "@/app/entities/Issue";
 import { CACHE_KEY_ISSUES } from "@/app/hooks/constatnt";
 import ms from "ms";
 
 const apiClient = new ApiClient<Issue>("/issue/");
-
-const useIssues = (page?: number) => {
+const useIssues = (page?: number, status?: Status | "") => {
   const { data, isLoading } = useQuery({
-    queryKey: [CACHE_KEY_ISSUES, page],
+    queryKey: [CACHE_KEY_ISSUES, page, status],
     queryFn: () =>
       apiClient.getAll({
-        params: { page },
+        params: { page, status },
       }),
     staleTime: ms("1m"),
     retry: 3,

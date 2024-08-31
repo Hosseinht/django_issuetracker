@@ -1,4 +1,5 @@
-import axios from "axios";
+import axios, { AxiosRequestConfig } from "axios";
+import { FetchResponse } from "@/app/services/apiClient";
 
 const axiosInstance = axios.create({
   baseURL: "http://localhost:8000/auth",
@@ -33,10 +34,11 @@ class AuthClient<T> {
     return res.data;
   };
 
-  getAll = async () => {
-    const res = await axiosInstance.get<T[]>(this.endpoint, {
-      withCredentials: true,
-    });
+  getAll = async (config: AxiosRequestConfig = {}) => {
+    const res = await axiosInstance.get<FetchResponse<T>>(
+      this.endpoint,
+      config,
+    );
     return res.data;
   };
 }

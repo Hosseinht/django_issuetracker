@@ -1,16 +1,26 @@
 "use client";
-
 import { Table } from "@radix-ui/themes";
 import useIssues from "@/app/hooks/issues/useIssues";
 import LoadingIssuesPage from "@/app/issues/loading";
 import IssueActions from "@/app/issues/IssueActions";
 import { IssueStatusBadge, Link } from "@/app/components";
-import { useState } from "react";
 import Pagination from "@/app/components/Pagination";
+import { Status } from "@/app/entities/Issue";
 
-const IssuesPage = () => {
-  const [page, setPage] = useState<number>(1);
-  const { data: issues, isLoading } = useIssues(page);
+interface Props {
+  searchParams: { status: Status; page: string };
+}
+
+const IssuesPage = ({ searchParams }: Props) => {
+  const page = parseInt(searchParams.page) || 1;
+  const pageSize = 3;
+  const statuses = Object.values(["OPEN", "IN_PROGRESS", "CLOSED"]);
+
+  const status = statuses.includes(searchParams.status)
+    ? searchParams.status
+    : "";
+
+  const { data: issues, isLoading } = useIssues(page, status);
 
   if (isLoading)
     return (
@@ -22,7 +32,7 @@ const IssuesPage = () => {
   return (
     <div>
       <IssueActions />
-      <span onClick={() => setPage(page + 1)}>next</span>
+
       <Table.Root variant="surface">
         <Table.Header>
           <Table.Row>
@@ -57,9 +67,8 @@ const IssuesPage = () => {
       {issues && (
         <Pagination
           itemCount={issues.count}
-          pageSize={3}
+          pageSize={pageSize}
           currentPage={page}
-          setPage={setPage}
         />
       )}
     </div>

@@ -11,8 +11,10 @@ const useFetchUsers = () => {
     queryFn: () => authClient.getAll(),
     staleTime: ms("5m"),
     retry: 3,
+    select: (result) => {
+      return result.results;
+    },
   });
-
   return { data, error, isPending };
 };
 
