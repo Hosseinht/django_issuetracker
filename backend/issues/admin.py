@@ -6,7 +6,8 @@ from .models import Issue
 
 
 class IssueAdmin(admin.ModelAdmin):
-    list_display = ["title", "user", "status"]
+    ordering = ("id", "title", "created_at", "updated_at")
+    list_display = ["title", "user", "status", "created_at", "updated_at"]
 
 
 admin.site.register(Issue, IssueAdmin)

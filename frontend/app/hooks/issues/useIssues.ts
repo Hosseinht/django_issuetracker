@@ -5,12 +5,12 @@ import { CACHE_KEY_ISSUES } from "@/app/hooks/constatnt";
 import ms from "ms";
 
 const apiClient = new ApiClient<Issue>("/issue/");
-const useIssues = (page?: number, status?: Status | "") => {
+const useIssues = (page?: number, status?: Status | "", ordering?: string) => {
   const { data, isLoading } = useQuery({
-    queryKey: [CACHE_KEY_ISSUES, page, status],
+    queryKey: [CACHE_KEY_ISSUES, page, status, ordering],
     queryFn: () =>
       apiClient.getAll({
-        params: { page, status },
+        params: { page, status, ordering },
       }),
     staleTime: ms("1m"),
     retry: 3,

@@ -5,22 +5,48 @@ import LoadingIssuesPage from "@/app/issues/loading";
 import IssueActions from "@/app/issues/IssueActions";
 import { IssueStatusBadge, Link } from "@/app/components";
 import Pagination from "@/app/components/Pagination";
-import { Status } from "@/app/entities/Issue";
+import { Issue, Status } from "@/app/entities/Issue";
+import NextLink from "next/link";
+import { ChevronDownIcon, ChevronUpIcon } from "@radix-ui/react-icons";
 
 interface Props {
-  searchParams: { status: Status; page: string };
+  searchParams: { status: Status; page: string; ordering: keyof Issue };
 }
 
 const IssuesPage = ({ searchParams }: Props) => {
   const page = parseInt(searchParams.page) || 1;
-  const pageSize = 3;
+  const pageSize = 10;
   const statuses = Object.values(["OPEN", "IN_PROGRESS", "CLOSED"]);
+
+  const columns: { label: string; value: keyof Issue; className?: string }[] = [
+    { label: "Issue", value: "title" },
+    { label: "Status", value: "status", className: "hidden md:table-cell" },
+    {
+      label: "Created",
+      value: "created_at",
+      className: "hidden md:table-cell",
+    },
+  ];
 
   const status = statuses.includes(searchParams.status)
     ? searchParams.status
     : "";
 
-  const { data: issues, isLoading } = useIssues(page, status);
+  const toggleOrdering = (value: keyof Issue) => {
+    if (searchParams.ordering === value) {
+      return `-${value}`;
+    } else if (searchParams.ordering === `-${value}`) {
+      return value;
+    } else {
+      return value;
+    }
+  };
+
+  const { data: issues, isLoading } = useIssues(
+    page,
+    status,
+    searchParams.ordering,
+  );
 
   if (isLoading)
     return (
@@ -36,13 +62,26 @@ const IssuesPage = ({ searchParams }: Props) => {
       <Table.Root variant="surface">
         <Table.Header>
           <Table.Row>
-            <Table.ColumnHeaderCell>Issue</Table.ColumnHeaderCell>
-            <Table.ColumnHeaderCell className="hidden md:table-cell">
-              Status
-            </Table.ColumnHeaderCell>
-            <Table.ColumnHeaderCell className="hidden md:table-cell">
-              Created
-            </Table.ColumnHeaderCell>
+            {columns.map((column) => (
+              <Table.ColumnHeaderCell key={column.value}>
+                <NextLink
+                  href={{
+                    query: {
+                      ...searchParams,
+                      ordering: toggleOrdering(column.value),
+                    },
+                  }}
+                >
+                  {column.value === searchParams.ordering && (
+                    <ChevronUpIcon className="inline" />
+                  )}
+                  {searchParams.ordering === `-${column.value}` && (
+                    <ChevronDownIcon className="inline" />
+                  )}
+                  {column.label}
+                </NextLink>
+              </Table.ColumnHeaderCell>
+            ))}
           </Table.Row>
         </Table.Header>
         <Table.Body>
