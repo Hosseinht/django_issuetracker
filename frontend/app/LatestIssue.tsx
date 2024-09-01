@@ -1,4 +1,4 @@
-import React from "react";
+"use client";
 import useIssues from "@/app/hooks/issues/useIssues";
 import { Card, Flex, Heading, Table } from "@radix-ui/themes";
 import Link from "@/app/components/Link";

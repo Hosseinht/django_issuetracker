@@ -51,6 +51,19 @@ class IssueListView(ListAPIView):
     pagination_class = IssuePagination
 
 
+class IssueStatusCountView(APIView):
+    def get(self, request, format=None):
+        status_counts = {
+            "OPEN": Issue.objects.filter(status=Issue.Status.OPEN).count(),
+            "IN_PROGRESS": Issue.objects.filter(
+                status=Issue.Status.IN_PROGRESS
+            ).count(),
+            "CLOSED": Issue.objects.filter(status=Issue.Status.CLOSED).count(),
+        }
+
+        return Response(status_counts)
+
+
 class IssueDetailView(APIView):
     def get(self, request, pk, format=None):
         issue = get_object_or_404(Issue, id=pk)
@@ -73,9 +86,4 @@ class IssueDetailView(APIView):
     def delete(self, request, pk):
         issue = get_object_or_404(Issue, id=pk)
         issue.delete()
-        return Response(status=status.HTTP_204_NO_CONTENT)
-        return Response(status=status.HTTP_204_NO_CONTENT)
-        issue = get_object_or_404(Issue, id=pk)
-        issue.delete()
-        return Response(status=status.HTTP_204_NO_CONTENT)
         return Response(status=status.HTTP_204_NO_CONTENT)

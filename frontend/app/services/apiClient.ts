@@ -30,6 +30,11 @@ class ApiClient<T> {
     return res.data;
   };
 
+  getStatuses = async () => {
+    const res = await axiosInstance.get<T>(this.endpoint);
+    return res.data;
+  };
+
   getOne = async (id: number) => {
     const res = await axiosInstance.get<T>(this.endpoint + "/" + id + "/");
     return res.data;
