@@ -15,6 +15,7 @@ from issues.serializers import (
     IssueUpdateSerializer,
 )
 
+from .paginations import IssuePagination  # type: ignore
 from .services import create_issue, update_issue
 
 
@@ -46,6 +47,8 @@ class IssueListView(ListAPIView):
     filter_backends = [DjangoFilterBackend, OrderingFilter, SearchFilter]
     filterset_class = StatusFilter
     ordering_fields = ["title", "created_at", "status", "user"]
+    # max_limit = 10
+    pagination_class = IssuePagination
 
 
 class IssueDetailView(APIView):
@@ -70,4 +73,9 @@ class IssueDetailView(APIView):
     def delete(self, request, pk):
         issue = get_object_or_404(Issue, id=pk)
         issue.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
+        return Response(status=status.HTTP_204_NO_CONTENT)
+        issue = get_object_or_404(Issue, id=pk)
+        issue.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
         return Response(status=status.HTTP_204_NO_CONTENT)

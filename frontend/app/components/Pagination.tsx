@@ -10,49 +10,52 @@ import { useRouter, useSearchParams } from "next/navigation";
 
 interface Props {
   itemCount: number;
-  pageSize: number;
-  currentPage: number;
+  limit: number;
+  offset: number | 0;
+  next: string | null;
+  previous: string | null;
 }
 
-const Pagination = ({ itemCount, pageSize, currentPage }: Props) => {
+const Pagination = ({ itemCount, limit, offset, next, previous }: Props) => {
   const router = useRouter();
   const searchParams = useSearchParams();
 
-  const pageCount = Math.ceil(itemCount / pageSize);
+  const pageCount = Math.ceil(itemCount / limit);
+  const lastPage = Math.floor(itemCount / limit) * limit;
+
   if (pageCount <= 1) return null;
 
-  const changePage = (page: number) => {
+  const changePage = (offset: number | 0) => {
     const params = new URLSearchParams(searchParams);
-    params.set("page", page.toString());
+    if (offset) params.set("offset", offset.toString());
+    if (offset === 0) params.delete("offset");
+
     router.push("?" + params.toString());
   };
   return (
     <Flex align="center" gap="2" justify="center" mt="5">
       <Text>
-        Page {currentPage} of {pageCount}
+        Page {offset / limit + 1} of {pageCount}
       </Text>
-      <Button onClick={() => changePage(1)} disabled={currentPage === 1}>
+      <Button onClick={() => changePage(0)} disabled={previous === null}>
         <DoubleArrowLeftIcon />
       </Button>
       <Button
-        onClick={() => changePage(currentPage - 1)}
-        disabled={currentPage === 1}
+        onClick={() => changePage(offset - 10)}
+        disabled={previous === null}
       >
         <ChevronLeftIcon />
       </Button>
 
       <Button
-        // onClick={() => setPage(currentPage + 1)}
-        onClick={() => changePage(currentPage + 1)}
-        disabled={currentPage === pageCount}
+        // onClick={() => setPage(offset + 1)}
+        onClick={() => changePage(offset + 10)}
+        disabled={next === null}
       >
         <ChevronRightIcon />
       </Button>
 
-      <Button
-        onClick={() => changePage(pageCount)}
-        disabled={currentPage === pageCount}
-      >
+      <Button onClick={() => changePage(lastPage)} disabled={next === null}>
         <DoubleArrowRightIcon />
       </Button>
     </Flex>

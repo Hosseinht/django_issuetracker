@@ -11,8 +11,8 @@ interface Props {
 }
 
 const IssuesPage = ({ searchParams }: Props) => {
-  const page = parseInt(searchParams.page) || 1;
-  const pageSize = 10;
+  const offset = parseInt(searchParams.offset) || 0;
+  const limit = 10;
   const statuses = Object.values(["OPEN", "IN_PROGRESS", "CLOSED"]);
 
   const status = statuses.includes(searchParams.status)
@@ -20,9 +20,10 @@ const IssuesPage = ({ searchParams }: Props) => {
     : "";
 
   const { data: issues, isLoading } = useIssues(
-    page,
-    status,
+    limit,
+    offset,
     searchParams.ordering,
+    status,
   );
 
   if (isLoading)
@@ -39,8 +40,10 @@ const IssuesPage = ({ searchParams }: Props) => {
       {issues && (
         <Pagination
           itemCount={issues.count}
-          pageSize={pageSize}
-          currentPage={page}
+          next={issues.next}
+          previous={issues.previous}
+          limit={limit}
+          offset={offset}
         />
       )}
     </Flex>

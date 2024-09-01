@@ -1,3 +1,6 @@
+"use client";
+import LatestIssue from "@/app/LatestIssue";
+
 export default function Home() {
-  return <h1> Issue Tracker</h1>;
+  return <LatestIssue />;
 }

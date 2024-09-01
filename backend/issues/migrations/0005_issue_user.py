@@ -6,7 +6,6 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
         ("issues", "0004_alter_issue_status"),
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
