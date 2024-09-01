@@ -21,8 +21,6 @@ class IssueInputSerializer(serializers.Serializer):
 
 
 class IssueUpdateSerializer(serializers.ModelSerializer):
-    # user = serializers.SlugRelatedField(slug_field="user")
-
     class Meta:
         model = Issue
         fields = ("user", "title", "description", "status")

@@ -8,7 +8,7 @@ const IssueActions = () => {
   const isAuthenticated = useAuthStore((s) => s.isAuthenticated);
   if (isAuthenticated) {
     return (
-      <Flex mb="5" justify="between">
+      <Flex justify="between">
         <IssueStatusFilter />
         <Button>
           <Link href="/issues/new">New Issue</Link>

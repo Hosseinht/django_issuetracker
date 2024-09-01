@@ -45,7 +45,7 @@ class IssueListView(ListAPIView):
     serializer_class = IssueOutPutSerializer
     filter_backends = [DjangoFilterBackend, OrderingFilter, SearchFilter]
     filterset_class = StatusFilter
-    ordering_fields = ["title", "updated_at", "status", "user"]
+    ordering_fields = ["title", "created_at", "status", "user"]
 
 
 class IssueDetailView(APIView):
