@@ -42,7 +42,7 @@ class IssueCreateView(APIView):
 
 
 class IssueListView(ListAPIView):
-    queryset = Issue.objects.select_related("user").all()
+    queryset = Issue.objects.select_related("user").all().order_by("-created_at")
     serializer_class = IssueOutPutSerializer
     filter_backends = [DjangoFilterBackend, OrderingFilter, SearchFilter]
     filterset_class = StatusFilter

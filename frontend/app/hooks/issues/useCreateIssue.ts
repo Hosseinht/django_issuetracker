@@ -18,7 +18,7 @@ const useCreateIssue = () => {
     mutationFn: (data: CreateIssue) => apiClient.post(data),
     onSuccess: async () => {
       router.push("/issues");
-      await client.invalidateQueries({ queryKey: CACHE_KEY_ISSUES });
+      await client.invalidateQueries({ queryKey: [CACHE_KEY_ISSUES] });
     },
     onError: () => {
       setError("An unexpected error occurred.");

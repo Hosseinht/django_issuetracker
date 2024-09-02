@@ -33,7 +33,7 @@ const useLogin = () => {
       } else {
         logout();
       }
-      await client.invalidateQueries({ queryKey: CACHE_KEY_USER });
+      await client.invalidateQueries({ queryKey: [CACHE_KEY_USER] });
 
       router.push("/issues");
     },

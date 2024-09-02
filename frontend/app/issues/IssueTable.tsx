@@ -4,7 +4,6 @@ import { ChevronDownIcon, ChevronUpIcon } from "@radix-ui/react-icons";
 import { IssueStatusBadge, Link } from "@/app/components";
 import { Issue, Status } from "@/app/entities/Issue";
 import { FetchResponse } from "@/app/services/apiClient";
-import { useSearchParams } from "next/navigation";
 
 export interface IssueQuery {
   status: Status;
@@ -21,7 +20,7 @@ const IssueTable = ({ searchParams, issues }: Props) => {
     if (searchParams.ordering === value) {
       return `-${value}`;
     } else if (searchParams.ordering === `-${value}`) {
-      return null;
+      return "";
     } else {
       return value;
     }

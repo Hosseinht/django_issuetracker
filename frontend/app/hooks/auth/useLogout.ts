@@ -12,7 +12,7 @@ const useLogout = () => {
     mutationFn: () => authClient.post(),
     onSuccess: async () => {
       router.push("/");
-      client.setQueryData(CACHE_KEY_USER, null);
+      client.setQueryData([CACHE_KEY_USER], null);
     },
   });
 };

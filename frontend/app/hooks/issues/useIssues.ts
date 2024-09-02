@@ -1,7 +1,6 @@
 import ApiClient from "@/app/services/apiClient";
 import { useQuery } from "@tanstack/react-query";
 import { Issue, Status } from "@/app/entities/Issue";
-import { CACHE_KEY_ISSUES } from "@/app/hooks/constatnt";
 import ms from "ms";
 
 const apiClient = new ApiClient<Issue>("/issue/");
@@ -12,7 +11,7 @@ const useIssues = (
   status?: Status | "",
 ) => {
   const { data, isLoading } = useQuery({
-    queryKey: [CACHE_KEY_ISSUES, limit, offset, status, ordering],
+    queryKey: ["issues", limit, offset, status, ordering],
     queryFn: () =>
       apiClient.getAll({
         params: { limit, offset, ordering, status },

@@ -38,13 +38,15 @@ const IssuesPageClient = ({ searchParams }: Props) => {
       <IssueActions />
       <IssueTable searchParams={searchParams} issues={issues} />
       {issues && (
-        <Pagination
-          itemCount={issues.count}
-          next={issues.next}
-          previous={issues.previous}
-          limit={limit}
-          offset={offset}
-        />
+        <>
+          <Pagination
+            itemCount={issues.count}
+            next={issues.next}
+            previous={issues.previous}
+            limit={limit}
+            offset={offset}
+          />
+        </>
       )}
     </Flex>
   );

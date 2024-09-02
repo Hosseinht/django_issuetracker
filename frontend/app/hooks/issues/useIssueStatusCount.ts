@@ -1,5 +1,4 @@
 import ApiClient from "@/app/services/apiClient";
-import { Status } from "@/app/entities/Issue";
 import { useQuery } from "@tanstack/react-query";
 import ms from "ms";
 
@@ -8,7 +7,7 @@ const apiClient = new ApiClient<{ [key: string]: number }>(
 );
 
 const useIssueStatusCount = () => {
-  const { data, isLoading, isPending } = useQuery({
+  const { data, isLoading } = useQuery({
     queryKey: ["statuses"],
     queryFn: () => apiClient.getStatuses(),
     staleTime: ms("5m"),

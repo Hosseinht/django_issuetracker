@@ -13,7 +13,7 @@ const useDeleteIssue = (id: number) => {
     mutationFn: () => apiClient.delete(id),
     onSuccess: async () => {
       router.push("/issues");
-      await client.invalidateQueries({ queryKey: CACHE_KEY_ISSUES });
+      await client.invalidateQueries({ queryKey: [CACHE_KEY_ISSUES] });
     },
   });
   return {

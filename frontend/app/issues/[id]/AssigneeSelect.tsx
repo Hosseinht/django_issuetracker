@@ -18,9 +18,9 @@ const AssigneeSelect = ({ issue }: { issue: Issue }) => {
   const handleValueChange = (user: null | string) => {
     if (user === "unassigned") {
       const user = null;
-      updateIssue({ user });
+      updateIssue({ user: user, status: "OPEN" });
     } else {
-      updateIssue({ user });
+      updateIssue({ user, status: "IN_PROGRESS" });
     }
   };
 
