@@ -16,8 +16,8 @@ import { Metadata } from "next";
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 
 export const metadata: Metadata = {
-  title: "Issue List",
-  description: "Track Issues",
+  title: "Issue Tracker - Dashboard",
+  description: "View a summary of issues",
 };
 
 export default async function RootLayout({

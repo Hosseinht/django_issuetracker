@@ -16,6 +16,8 @@ const EditIssuePage = ({ params }: Props) => {
 
   return (
     <div>
+      <title>{issue?.title}</title>
+      <meta name="description" content={"Edit issue " + issue?.title} />
       <IssueForm issue={issue} />
     </div>
   );

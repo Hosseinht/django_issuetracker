@@ -28,6 +28,8 @@ const IssueDetailPage = ({ params }: Props) => {
 
   return (
     <Grid columns={{ initial: "1", sm: "5" }} gap="5">
+      <title>{issue.title}</title>
+      <meta name="description" content={"Details of issue " + issue?.id} />
       <Box className="md:col-span-4">
         <IssueDetails issue={issue} />
       </Box>

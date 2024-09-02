@@ -1,12 +1,12 @@
 "use client";
 import useIssues from "@/app/hooks/issues/useIssues";
 import { Card, Flex, Heading, Table } from "@radix-ui/themes";
-import Link from "@/app/components/Link";
+import Link from "next/link";
 import IssueStatusBadge from "@/app/components/IssueStatusBadge";
 
 const LatestIssue = () => {
   const { data: issues } = useIssues(5, "", "created_at");
-  console.log(issues?.results);
+
   return (
     <Card>
       <Heading size="4" mb="4" ml="3">
