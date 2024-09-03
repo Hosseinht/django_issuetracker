@@ -1,6 +1,7 @@
 from django.conf import settings
 from djoser.social.views import ProviderAuthView
 from djoser.views import UserViewSet
+from drf_spectacular.utils import extend_schema
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -10,6 +11,7 @@ from rest_framework_simplejwt.views import (
     TokenVerifyView,
 )
 
+from users.schema import CustomAutoSchema
 from users.serializers import CustomActivationSerializer, CustomTokenRefreshSerializer
 
 
@@ -50,14 +52,17 @@ class JWTSetCookieMixin:
         return super().finalize_response(request, response, *args, **kwargs)
 
 
+@extend_schema(tags=["Authentication - JWT"])
 class JWTCookieTokenObtainPairView(JWTSetCookieMixin, TokenObtainPairView):
     pass
 
 
+@extend_schema(tags=["Authentication - JWT"])
 class JWTCookieTokenRefreshView(JWTSetCookieMixin, TokenRefreshView):
     serializer_class = CustomTokenRefreshSerializer
 
 
+@extend_schema(tags=["Authentication - JWT"])
 class JWTCookieTokenVerifyView(TokenVerifyView):
     def post(self, request, *args, **kwargs):
         access_token = request.COOKIES.get(settings.SIMPLE_JWT["َACCESS_TOKEN_NAME"])
@@ -66,6 +71,7 @@ class JWTCookieTokenVerifyView(TokenVerifyView):
         return super().post(request, *args, **kwargs)
 
 
+@extend_schema(tags=["Authentication - JWT"])
 class JWTProviderAuthView(ProviderAuthView):
     """
      View for social authentication with JWT tokens set as cookies.
@@ -114,6 +120,7 @@ class JWTProviderAuthView(ProviderAuthView):
         return response
 
 
+@extend_schema(tags=["Authentication - JWT"])
 class LogoutView(APIView):
     def post(self, request, *args, **kwargs):
         response = Response(status=status.HTTP_204_NO_CONTENT)
@@ -126,13 +133,23 @@ class LogoutView(APIView):
 
 
 class CustomUserViewSet(UserViewSet):
+    schema = CustomAutoSchema()
+
     def get_serializer_class(self):
         if self.action == "activation":  # noqa
             return CustomActivationSerializer
         return super().get_serializer_class()
 
 
+@extend_schema(tags=["Authentication - JWT"])
 class AuthCheckView(APIView):
+    """
+    Checks the authentication status of the current user.
+
+    Returns a JSON response indicating whether the user is authenticated or not. If the user is authenticated,
+    the response also includes the user's email address.
+    """
+
     def get(self, request):
         user = request.user
 

@@ -4,3 +4,5 @@ psycopg2-binary
 djangorestframework
 django-cors-headers
 djoser
+drf-spectacular
+django-filter

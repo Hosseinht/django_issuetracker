@@ -4,7 +4,7 @@ pytest
 pytest-django
 
 factory-boy
-Faker
+ Faker
 
 django-debug-toolbar
 ruff

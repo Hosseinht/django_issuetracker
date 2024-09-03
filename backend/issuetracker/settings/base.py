@@ -17,7 +17,6 @@ from decouple import config
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
 
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
@@ -32,7 +31,7 @@ THIRD_PARTY_APPS = [
     "rest_framework",
     "django_filters",
     "corsheaders",
-    # "drf_spectacular",
+    "drf_spectacular",
     "debug_toolbar",
     "djoser",
     "social_django",
@@ -91,7 +90,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = "issuetracker.wsgi.application"
 
-
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
@@ -114,7 +112,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/5.0/topics/i18n/
 
@@ -125,7 +122,6 @@ TIME_ZONE = "UTC"
 USE_I18N = True
 
 USE_TZ = True
-
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
@@ -140,6 +136,7 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": ["users.authentication.JWTCookieAuthentication"],
+    "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
     # "DEFAULT_PERMISSION_CLASSES": [
     #     "rest_framework.permissions.IsAuthenticated",
     # ],
@@ -159,10 +156,10 @@ SIMPLE_JWT = {
 COOKIE_HTTPONLY = True
 COOKIE_SECURE = config("COOKIE_SECURE", True)
 
-
 DJOSER = {
     "HIDE_USERS": False,
     "USER_ACTIVATION_TIMEOUT": timedelta(days=11),
+    "USERNAME_RESET_CONFIRM_URL": False,
     "PASSWORD_RESET_CONFIRM_URL": "auth/password-reset/{uid}/{token}",
     "SEND_ACTIVATION_EMAIL": True,
     "ACTIVATION_URL": "auth/activation/{uid}/{token}",
@@ -198,7 +195,6 @@ SOCIAL_AUTH_GOOGLE_OAUTH2_SCOPE = [
 ]
 SOCIAL_AUTH_GOOGLE_OAUTH2_EXTRA_DATA = ["first_name", "last_name"]
 
-
 SOCIAL_AUTH_PIPELINE = [
     "social_core.pipeline.social_auth.social_details",
     "social_core.pipeline.social_auth.social_uid",
@@ -220,3 +216,10 @@ EMAIL_HOST_USER = config("EMAIL_HOST_USER")
 
 DOMAIN = config("DOMAIN")
 SITE_NAME = "Issue Tracker"
+
+SPECTACULAR_SETTINGS = {
+    "TITLE": "Issue Tracker",
+    "DESCRIPTION": "Issue Tracker is a web application designed to help teams track and manage issues, report bugs, "
+    "and streamline their development workflow",
+    "VERSION": "1.0.0",
+}
