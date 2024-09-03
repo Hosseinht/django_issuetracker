@@ -30,7 +30,7 @@ effective collaboration and communication among team members.
 -------------------
 
 * Backend: Django, Django Rest Framework, Djoser
-* Frontend: Next.js, React Query
+* Frontend: Next.js, React Query, typescript
 * UI: Tailwind, Radix UI
 * Database: PostgreSQL
 
@@ -71,7 +71,7 @@ at [http://127.0.0.1:8000/api/schema/swagger-ui/](http://127.0.0.1:8000/api/sche
 **Frontend Features**
 -------------------
 
-* Dashboard: The application provides a personalized dashboard, displaying latest issues, issue chart and key metrics.
+* Dashboard: The application provides a dashboard, displaying latest issues, issue chart and key metrics.
 * Issue Assignment: Users can assign issues to themselves or other team members, facilitating effective collaboration
   and task allocation.
 * Sorting: Issues can be sorted by title, description, status, creation date and assigned users
