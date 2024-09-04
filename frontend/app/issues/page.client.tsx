@@ -5,14 +5,16 @@ import IssueActions from "@/app/issues/IssueActions";
 import Pagination from "@/app/components/Pagination";
 import IssueTable, { IssueQuery } from "@/app/issues/IssueTable";
 import { Flex } from "@radix-ui/themes";
+import { useState } from "react";
 
 interface Props {
   searchParams: IssueQuery;
 }
 
 const IssuesPageClient = ({ searchParams }: Props) => {
+  const [limit, setLimit] = useState("10");
   const offset = parseInt(searchParams.offset) || 0;
-  const limit = 10;
+
   const statuses = Object.values(["OPEN", "IN_PROGRESS", "CLOSED"]);
 
   const status = statuses.includes(searchParams.status)
@@ -20,7 +22,7 @@ const IssuesPageClient = ({ searchParams }: Props) => {
     : "";
 
   const { data: issues, isLoading } = useIssues(
-    limit,
+    parseInt(limit),
     offset,
     searchParams.ordering,
     status,
@@ -44,6 +46,7 @@ const IssuesPageClient = ({ searchParams }: Props) => {
             next={issues.next}
             previous={issues.previous}
             limit={limit}
+            setLimit={setLimit}
             offset={offset}
           />
         </>
