@@ -15,17 +15,25 @@ const IssuesPageClient = ({ searchParams }: Props) => {
   const [limit, setLimit] = useState("10");
   const offset = parseInt(searchParams.offset) || 0;
 
-  const statuses = Object.values(["OPEN", "IN_PROGRESS", "CLOSED"]);
-
+  const statuses = ["OPEN", "IN_PROGRESS", "CLOSED"];
   const status = statuses.includes(searchParams.status)
     ? searchParams.status
     : "";
+
+  const priorities = ["HIGH", "MEDIUM", "LOW"];
+  const priority = priorities.includes(searchParams.priority)
+    ? searchParams.priority
+    : "";
+  // It ensures that only recognized priority values are used. If searchParams.priority contains a value like
+  // "HIGH", "MEDIUM", or "LOW", that value is used; otherwise, priority is set to an empty string,
+  // effectively meaning "no priority filter" or "all priorities".
 
   const { data: issues, isLoading } = useIssues(
     parseInt(limit),
     offset,
     searchParams.ordering,
     status,
+    priority,
   );
 
   if (isLoading)

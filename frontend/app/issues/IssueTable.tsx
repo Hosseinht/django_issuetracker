@@ -2,12 +2,13 @@ import { Table } from "@radix-ui/themes";
 import NextLink from "next/link";
 import { ChevronDownIcon, ChevronUpIcon } from "@radix-ui/react-icons";
 import { IssueStatusBadge, Link } from "@/app/components";
-import { Issue, Status } from "@/app/entities/Issue";
+import { Issue, Priority, Status } from "@/app/entities/Issue";
 import { FetchResponse } from "@/app/services/apiClient";
 import IssuePriorityBadge from "@/app/components/IssuePriorityBadge";
 
 export interface IssueQuery {
   status: Status;
+  priority: Priority;
   offset: string;
   ordering: keyof Issue;
 }
@@ -26,7 +27,7 @@ const IssueTable = ({ searchParams, issues }: Props) => {
       return value;
     }
   };
-  console.log(issues?.results);
+
   const columns: { label: string; value: keyof Issue; className?: string }[] = [
     { label: "Issue", value: "title" },
     { label: "Status", value: "status", className: "hidden md:table-cell" },
@@ -71,7 +72,7 @@ const IssueTable = ({ searchParams, issues }: Props) => {
         {issues?.results?.map((issue) => (
           <Table.Row key={issue.id}>
             <Table.Cell>
-              <Link href={`/issues/${issue.id}`}>{issue.title}</Link>
+              <NextLink href={`/issues/${issue.id}`}>{issue.title}</NextLink>
               <div className="block md:hidden">
                 <IssueStatusBadge status={issue.status} />
               </div>

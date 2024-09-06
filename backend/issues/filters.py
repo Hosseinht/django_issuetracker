@@ -9,10 +9,17 @@ STATUSES = [
     ("CLOSED", "CLOSED"),
 ]
 
+PRIORITIES = [
+    ("LOW", "LOW"),
+    ("MEDIUM", "MEDIUM"),
+    ("HIGH", "HIGH"),
+]
+
 
 class StatusFilter(FilterSet):
     status = ChoiceFilter(choices=STATUSES)
+    priority = ChoiceFilter(choices=PRIORITIES)
 
     class Meta:
         model = Issue
-        fields = ["status"]
+        fields = ["status", "priority"]

@@ -28,6 +28,69 @@ body {
   margin-top: 30px !important;
 }
 
+.filter-box {
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 16px;
+  background-color: #fff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+/* Filter Header */
+.filter-header {
+  margin-bottom: 16px;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+/* Filter Content */
+.filter-content {
+  gap: 16px;
+}
+
+/* Select Trigger */
+.filter-trigger {
+  display: flex;
+  align-items: center;
+  padding: 8px 12px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  cursor: pointer;
+  width: 100%;
+  background-color: #f9f9f9;
+}
+
+.filter-trigger:hover {
+  background-color: #e9e9e9;
+}
+
+/* Select Content */
+.filter-content .select-content {
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  background-color: #fff;
+  z-index: 1000;
+}
+
+/* Select Item */
+.filter-content .select-item {
+  padding: 8px 12px;
+  cursor: pointer;
+}
+
+.filter-content .select-item:hover {
+  background-color: #e9e9e9;
+}
+
+/* Horizontal Rule */
+.filter-content hr {
+  margin: 8px 0;
+  border: none;
+  border-top: 1px solid #ccc;
+}
 
 
 @layer utilities {
