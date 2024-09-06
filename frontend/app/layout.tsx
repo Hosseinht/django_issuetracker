@@ -5,7 +5,7 @@ import "./theme-config.css";
 import "./globals.css";
 import { Inter } from "next/font/google";
 import NavBar from "@/app/NavBar";
-import { Container, Theme } from "@radix-ui/themes";
+import { Container, Theme, ThemePanel } from "@radix-ui/themes";
 import QueryClientProvider from "@/app/QueryClientProvider";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 

@@ -11,7 +11,18 @@ from .models import Issue
 
 class IssueAdmin(admin.ModelAdmin):
     ordering = ("id", "title", "created_at", "updated_at")
-    list_display = ["title", "user", "status", "created_at", "updated_at"]
+    list_display = ["title", "user", "status", "priority", "created_at", "updated_at"]
+    readonly_fields = ["due_date", "created_at", "updated_at"]
+    fields = (
+        "title",
+        "user",
+        "description",
+        "status",
+        "priority",
+        "created_at",  # Read-only
+        "updated_at",  # Read-only
+        "due_date",
+    )
 
     def get_queryset(self, request: HttpRequest) -> QuerySet[Any]:
         queryset = super().get_queryset(request)

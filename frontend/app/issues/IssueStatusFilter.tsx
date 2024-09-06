@@ -1,7 +1,9 @@
 "use client";
-import { Select } from "@radix-ui/themes";
+
+import { Box, Flex, Select, Text } from "@radix-ui/themes";
 import { Status } from "@/app/entities/Issue";
 import { useRouter, useSearchParams } from "next/navigation";
+import { FiFilter } from "react-icons/fi";
 
 const statuses: { label: string; value?: Status }[] = [
   { label: "All" },
@@ -15,7 +17,7 @@ const IssueStatusFilter = () => {
   const searchParams = useSearchParams();
   return (
     <Select.Root
-      defaultValue={searchParams.get("status") || ""}
+      defaultValue={searchParams.get("status") || "Filter"}
       onValueChange={(status) => {
         const params = new URLSearchParams();
         if (status && status !== "All") params.append("status", status);
@@ -26,8 +28,18 @@ const IssueStatusFilter = () => {
         router.push("/issues/" + query);
       }}
     >
-      <Select.Trigger placeholder="Filter by status..." />
-      <Select.Content>
+      <Select.Trigger className="filter-trigger">
+        <Flex align="center">
+          <FiFilter className="mr-2" />
+
+          <span>{searchParams.get("status") || "Filter"}</span>
+        </Flex>
+      </Select.Trigger>
+      <Select.Content position="popper">
+        <Text size="2" weight="bold">
+          By status
+        </Text>
+        <hr className="h-px bg-bl-300 my-2" />
         {statuses.map((status) => (
           <Select.Item key={status.value} value={status.value ?? "All"}>
             {status.label}
@@ -37,5 +49,4 @@ const IssueStatusFilter = () => {
     </Select.Root>
   );
 };
-
 export default IssueStatusFilter;

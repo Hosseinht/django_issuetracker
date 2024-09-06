@@ -4,6 +4,7 @@ import { ChevronDownIcon, ChevronUpIcon } from "@radix-ui/react-icons";
 import { IssueStatusBadge, Link } from "@/app/components";
 import { Issue, Status } from "@/app/entities/Issue";
 import { FetchResponse } from "@/app/services/apiClient";
+import IssuePriorityBadge from "@/app/components/IssuePriorityBadge";
 
 export interface IssueQuery {
   status: Status;
@@ -25,9 +26,11 @@ const IssueTable = ({ searchParams, issues }: Props) => {
       return value;
     }
   };
+  console.log(issues?.results);
   const columns: { label: string; value: keyof Issue; className?: string }[] = [
     { label: "Issue", value: "title" },
     { label: "Status", value: "status", className: "hidden md:table-cell" },
+    { label: "Priority", value: "priority", className: "hidden md:table-cell" },
     {
       label: "Created",
       value: "created_at",
@@ -76,6 +79,10 @@ const IssueTable = ({ searchParams, issues }: Props) => {
             <Table.Cell className="hidden md:table-cell">
               <IssueStatusBadge status={issue.status} />
             </Table.Cell>
+            <Table.Cell className="hidden md:table-cell">
+              <IssuePriorityBadge priority={issue.priority} />
+            </Table.Cell>
+
             <Table.Cell className="hidden md:table-cell">
               {issue.created_at}
             </Table.Cell>

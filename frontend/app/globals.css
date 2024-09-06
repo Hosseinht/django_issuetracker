@@ -19,6 +19,7 @@ body {
 
 }
 
+
 .wide-button { /* Target the button within your form */
   width: 100% !important;
 }
@@ -26,6 +27,8 @@ body {
 .marginTop {
   margin-top: 30px !important;
 }
+
+
 
 @layer utilities {
   .text-balance {

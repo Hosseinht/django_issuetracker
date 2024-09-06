@@ -28,6 +28,7 @@ class IssueUpdateSerializer(serializers.ModelSerializer):
 
 class IssueOutPutSerializer(serializers.ModelSerializer):
     created_at = serializers.DateTimeField(format="%a %b %d %Y")
+    due_date = serializers.DateTimeField(format="%a %b %d %Y")
     user = serializers.StringRelatedField()
 
     class Meta:
@@ -37,8 +38,9 @@ class IssueOutPutSerializer(serializers.ModelSerializer):
             "user",
             "title",
             "status",
+            "priority",
             "created_at",
-            "updated_at",
+            "due_date",
         )
 
 

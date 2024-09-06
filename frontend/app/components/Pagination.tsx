@@ -31,7 +31,8 @@ const Pagination = ({
   // stupid radix ui Select component need string not a number :/
 
   const pageCount = Math.ceil(itemCount / numLimit);
-  const lastPage = Math.floor(itemCount / numLimit) * numLimit;
+  const lastPageOffset = Math.floor((itemCount - 1) / numLimit) * numLimit;
+  // Ensure that offset doesn't go where there are no items to show
 
   if (pageCount <= 1) return null;
 
@@ -51,7 +52,7 @@ const Pagination = ({
   ];
 
   return (
-    <Flex justify="between">
+    <Flex justify="between" mt="5">
       <Flex align="center" gap="2" justify="center">
         <Text>
           Page {Math.floor(offset / numLimit) + 1} of {pageCount}
@@ -68,7 +69,7 @@ const Pagination = ({
           </Select.Content>
         </Select.Root>
       </Flex>
-      <Flex align="center" gap="2" justify="center" mt="5">
+      <Flex align="center" gap="2" justify="center">
         <Button onClick={() => changePage(0)} disabled={previous === null}>
           <DoubleArrowLeftIcon />
         </Button>
@@ -80,13 +81,18 @@ const Pagination = ({
         </Button>
 
         <Button
-          onClick={() => changePage(Math.min(lastPage, offset + numLimit))}
+          onClick={() =>
+            changePage(Math.min(lastPageOffset, offset + numLimit))
+          }
           disabled={next === null}
         >
           <ChevronRightIcon />
         </Button>
 
-        <Button onClick={() => changePage(lastPage)} disabled={next === null}>
+        <Button
+          onClick={() => changePage(lastPageOffset)}
+          disabled={next === null}
+        >
           <DoubleArrowRightIcon />
         </Button>
       </Flex>
