@@ -10,18 +10,19 @@ const useIssues = (
   ordering?: string | "",
   status?: Status | "",
   priority?: Priority | "",
+  search?: any | "",
 ) => {
   const { data, isLoading } = useQuery({
-    queryKey: ["issues", limit, offset, ordering, status, priority],
+    queryKey: ["issues", limit, offset, ordering, status, priority, search],
 
     queryFn: () =>
       apiClient.getAll({
-        params: { limit, offset, ordering, status, priority },
+        params: { limit, offset, ordering, status, priority, search },
       }),
     staleTime: ms("1m"),
     retry: 3,
   });
-  console.log("priority", priority);
+
   return { data, isLoading };
 };
 

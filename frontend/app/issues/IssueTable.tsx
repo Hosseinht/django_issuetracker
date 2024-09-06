@@ -11,6 +11,7 @@ export interface IssueQuery {
   priority: Priority;
   offset: string;
   ordering: keyof Issue;
+  search: any;
 }
 
 interface Props {

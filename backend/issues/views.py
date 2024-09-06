@@ -1,3 +1,5 @@
+from django.contrib.postgres.search import (SearchQuery, SearchRank,
+                                            SearchVector)
 from django.shortcuts import get_object_or_404
 from django_filters.rest_framework import DjangoFilterBackend
 from drf_spectacular.utils import extend_schema
@@ -9,12 +11,8 @@ from rest_framework.views import APIView
 
 from issues.filters import StatusFilter
 from issues.models import Issue
-from issues.serializers import (
-    IssueDetailSerializer,
-    IssueInputSerializer,
-    IssueOutPutSerializer,
-    IssueUpdateSerializer,
-)
+from issues.serializers import (IssueDetailSerializer, IssueInputSerializer,
+                                IssueOutPutSerializer, IssueUpdateSerializer)
 
 from .paginations import IssuePagination  # type: ignore
 from .services import create_issue, update_issue
@@ -51,11 +49,23 @@ class IssueCreateView(APIView):
 class IssueListView(ListAPIView):
     queryset = Issue.objects.select_related("user").all().order_by("-created_at")
     serializer_class = IssueOutPutSerializer
-    filter_backends = [DjangoFilterBackend, OrderingFilter, SearchFilter]
+    filter_backends = [DjangoFilterBackend, OrderingFilter]
     filterset_class = StatusFilter
     ordering_fields = ["title", "created_at", "status", "user"]
-    # max_limit = 10
     pagination_class = IssuePagination
+
+    def get_queryset(self):
+        query = self.request.query_params.get("search", None)
+
+        if query:
+            books = Issue.objects.annotate(
+                search=SearchVector("title", "description"),
+            ).filter(search=query)
+
+            return books
+
+        else:
+            return self.queryset
 
 
 @extend_schema(tags=["Issue"])

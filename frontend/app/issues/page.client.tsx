@@ -34,6 +34,7 @@ const IssuesPageClient = ({ searchParams }: Props) => {
     searchParams.ordering,
     status,
     priority,
+    searchParams.search,
   );
 
   if (isLoading)
